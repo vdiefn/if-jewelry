@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 
 
@@ -14,12 +14,25 @@ function Login() {
 
   const submit = async(e) => {
     const res = await axios.post('/v2/admin/signin', data)
-    const { token } = res.data
-    axios.defaults.headers.common['Authorization'] = token
-
-    const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/products/all`)
-    console.log(productRes)
+    const { token, expired } = res.data
+    document.cookie =`hexToken=${token}; expires=${new Date(expired)}`
+    //儲存token
   }
+
+  useEffect(() => {
+    //取出token
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith('hexToken='))
+      ?.split("=")[1]
+
+    axios.defaults.headers.common['Authorization'] = token;
+    
+    (async() => {
+      const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/products/all`)
+      console.log(productRes)
+    })()
+  },[])
 
   return (<div className="container py-5">
     <div className="row justify-content-center">
