@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 
 function Login() {
+  const navigate = useNavigate()
   const [data, setData] = useState({
     username:'',
     password:''
@@ -11,28 +13,19 @@ function Login() {
     const { name, value } = e.target
     setData({...data, [ name ]: value})
   }
-
+  
   const submit = async(e) => {
     const res = await axios.post('/v2/admin/signin', data)
     const { token, expired } = res.data
+    console.log(res.data)
     document.cookie =`hexToken=${token}; expires=${new Date(expired)}`
     //儲存token
+    //確認登入成功後進行轉址
+    if(res.data.success){
+      navigate('/admin/products')
+    }
   }
 
-  useEffect(() => {
-    //取出token
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith('hexToken='))
-      ?.split("=")[1]
-
-    axios.defaults.headers.common['Authorization'] = token;
-    
-    (async() => {
-      const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/products/all`)
-      console.log(productRes)
-    })()
-  },[])
 
   return (<div className="container py-5">
     <div className="row justify-content-center">
