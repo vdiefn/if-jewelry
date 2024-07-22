@@ -3,14 +3,7 @@ import axios from "axios";
 
 function AdminProducts(){
   useEffect(() => {
-    //取出token
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith('hexToken='))
-      ?.split("=")[1]
-
-    axios.defaults.headers.common['Authorization'] = token;
-
+    
     (async () => {
       const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/products/all`)
       console.log(productRes)

@@ -6,10 +6,7 @@ import Dashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/AdminProducts'
 
 function App() {
-  useEffect(()=>{
-    console.log(import.meta.env.VITE_API_URL, import.meta.env.VITE_API_PATH)
-  },[])
-
+  
   return (
     <div className='App'>
       <Routes>

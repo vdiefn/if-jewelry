@@ -1,6 +1,41 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 function Dashboard(){
+  const navigate = useNavigate()
+
+  const logout = () => {
+    document.cookie = 'hexToken=;'
+    navigate('/login')
+  }
+
+  //取出token
+  const token = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith('hexToken='))
+    ?.split("=")[1]
+
+  axios.defaults.headers.common['Authorization'] = token;
+
+  useEffect(() => {
+    // 沒有token會被直接導回首頁
+    if (!token) {
+      return navigate('/login')
+    }
+    // 若有token須先行經過驗證
+    (async() => {
+      try {
+        await axios.post('/v2/api/user/check')
+      } catch (error) {
+        console.log(error)
+        if (!error.response.data.success) {
+          navigate('/login')
+        }
+      }
+    })()
+    
+  }, [navigate, token])
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-dark">
@@ -22,7 +57,7 @@ function Dashboard(){
           <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <button type="button" className="btn btn-sm btn-light">
+                <button type="button" className="btn btn-sm btn-light" onClick={logout}>
                   登出
                 </button>
               </li>
@@ -48,9 +83,9 @@ function Dashboard(){
           </ul>
         </div>
         <div className="w-100">
-          {/* Products */}
-          <Outlet />
-          {/* Products end */}
+          
+          {token && <Outlet />}
+          
         </div>
       </div>
     </>

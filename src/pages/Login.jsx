@@ -20,7 +20,7 @@ function Login() {
     try {
       const res = await axios.post('/v2/admin/signin', data)
       const { token, expired } = res.data
-      console.log(res.data)
+      
       document.cookie =`hexToken=${token}; expires=${new Date(expired)}`
       //儲存token
       //確認登入成功後進行轉址
