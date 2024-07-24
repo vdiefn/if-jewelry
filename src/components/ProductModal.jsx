@@ -72,9 +72,24 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
       
     } catch (error) {
       console.log(error)
-    }
-    
+    } 
   }
+
+  const uploadFile = async (file) => {
+    console.log(file);
+    if (!file) {
+      return
+    }
+    const formData = new FormData()
+    formData.append('file-to-upload', file)
+    try {
+      const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/upload`, formData)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+
+  } 
 
   return ( 
     <div 
@@ -108,18 +123,20 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                     id='image'
                     placeholder='請輸入圖片連結'
                     className='form-control'
+                    onChange={handleChange}
+                    value={tempData.imageUrl}
                   />
                 </label>
               </div>
               <div className='form-group mb-2'>
-                <label className='w-100' htmlFor='customFile'>
-                  或 上傳圖片
-                  <input
-                    type='file'
-                    id='customFile'
-                    className='form-control'
-                  />
-                </label>
+                  <label className='w-100' htmlFor='customFile'>
+                      或 上傳圖片
+                    <input type="file" id='customFile' className='form-control mt-1' name="file-to-upload" onChange={(e) => uploadFile(e.target.files[0])} />
+                  </label> 
+                  <hr className='my-4' />
+                  {tempData.imageUrl && (
+                    <img src={tempData.imageUrl} className='img-fluid' alt='' />
+                  )}
               </div>
               <img src="" alt='' className='img-fluid' />
             </div>
