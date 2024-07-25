@@ -1,6 +1,7 @@
 import { Outlet, useNavigate, Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import axios from 'axios'
+import Message from '../../components/Message'
 
 function Dashboard(){
   const navigate = useNavigate()
@@ -38,6 +39,7 @@ function Dashboard(){
   }, [navigate, token])
   return (
     <>
+      <Message />
       <nav className="navbar navbar-expand-lg bg-dark">
         <div className="container-fluid">
           <p className="text-white mb-0">
