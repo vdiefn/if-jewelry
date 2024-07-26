@@ -1,20 +1,12 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { MessageContext } from "../store/messageStore";
 
 function Message() {
-  const [message, setMessage ] = useState({})
+  //const [message, setMessage ] = useState({})
+  const [message] = useContext(MessageContext)
 
   return (<>
-    <button type='button' onClick={()=>{
-      setMessage({
-        type: 'success',
-        title: '成功',
-        text: '這是成功的訊息'
-      })
-      setTimeout(()=> { //3秒後清空
-        setMessage({})
-      },3000)
-    }}
-      >按我</button>
+    
     <div
       className='toast-container position-fixed'
       style={{ top: '20px', right: '15px' }}

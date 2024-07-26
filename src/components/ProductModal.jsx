@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from "axios"
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../store/messageStore"
 
 function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
   const [tempData, setTempData] = useState({
@@ -13,6 +14,10 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     is_enabled: 1,
     imageUrl: "",
   })
+
+  const [message, dispatch] = useContext(MessageContext)
+
+
 
   useEffect(()=> {
     if(type ==='create') {
@@ -67,11 +72,13 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
           data: tempData
         }
       )
+      handleSuccessMessage(dispatch, res)
       closeProductModal() 
       getProducts()
       
     } catch (error) {
       console.log(error)
+      handleErrorMessage(dispatch, error)
     } 
   }
 
@@ -90,6 +97,8 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     }
 
   } 
+
+ 
 
   return ( 
     <div 
@@ -282,3 +291,5 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
 }
 
 export default ProductModal
+
+
