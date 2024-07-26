@@ -33,15 +33,15 @@ function AdminCoupons(){
     setPagination(res.data.pagination)
   }
 
-    const openCouponModal = (type, item) => {
-      setType(type)
-      setTempCoupon(item)
-      couponModal.current.show()
-    }
+  const openCouponModal = (type, item) => {
+    setType(type)
+    setTempCoupon(item)
+    couponModal.current.show()
+  }
 
-    const closeModal = () => {
-      couponModal.current.hide()
-    }
+  const closeModal = () => {
+    couponModal.current.hide()
+  }
 
   const openDeleteModal = (product) => {
     setTempCoupon(product)
