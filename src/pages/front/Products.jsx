@@ -1,4 +1,24 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+import Pagination from '../../components/Pagination'
+
 function Products(){
+  const [products, setProducts] = useState([])
+  const [pagination, setPagination] = useState({})
+
+  const getProducts = async (page = 1) => {
+    const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/products?page=${page}`)
+    console.log(productRes)
+    setProducts(productRes.data.products)
+    setPagination(productRes.data.pagination)
+  }
+
+  useEffect(() => {
+    getProducts()
+
+  }, [])
+
   return(<>
 
     <div className="container mt-md-5 mt-3 mb-7">
@@ -72,127 +92,30 @@ function Products(){
         </div>
         <div className="col-md-8">
           <div className="row">
-            <div className="col-md-6">
-              <div className="card border-0 mb-4 position-relative position-relative">
-                <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" className="card-img-top rounded-0" alt="..." />
-                  <a href="#" className="text-dark">
-                    <i className="far fa-heart position-absolute" style={{right: '16px', top: '16px'}}></i>
-                  </a>
-                  <div className="card-body p-0">
-                    <h4 className="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-                    <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                    <p className="text-muted mt-3"></p>
+            {
+              products.map((product) => {
+                return (<div className="col-md-6" key={product.id}>
+                  <div className="card border-0 mb-4 position-relative position-relative">
+                    <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height" alt="..." />
+                    <a href="#" className="text-dark">
+                      <i className="far fa-heart position-absolute" style={{ right: '16px', top: '16px' }}></i>
+                    </a>
+                    <div className="card-body p-0">
+                      <h4 className="mb-0 mt-3"><a href="./detail.html">{product.title}</a></h4>
+                      <p className="card-text mb-0">NT${product.price} <span className="text-muted "><del>NT${product.origin_price}</del></span></p>
+                      <p className="text-muted mt-3"></p>
+                    </div>
                   </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="card border-0 mb-4 position-relative position-relative">
-                <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" className="card-img-top rounded-0" alt="..." />
-                  <a href="#" className="text-dark">
-                  <i className="far fa-heart position-absolute" style={{ right: '16px', top: '16px' }}></i>
-                  </a>
-                  <div className="card-body p-0">
-                    <h4 className="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-                    <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                    <p className="text-muted mt-3"></p>
-                  </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="card border-0 mb-4 position-relative position-relative">
-                <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" className="card-img-top rounded-0" alt="..." />
-                  <a href="#" className="text-dark">
-                  <i className="far fa-heart position-absolute" style={{ right: '16px', top: '16px' }}></i>
-                  </a>
-                  <div className="card-body p-0">
-                    <h4 className="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-                    <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                    <p className="text-muted mt-3"></p>
-                  </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="card border-0 mb-4 position-relative position-relative">
-                <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" className="card-img-top rounded-0" alt="..." />
-                  <a href="#" className="text-dark">
-                  <i className="far fa-heart position-absolute" style={{ right: '16px', top: '16px' }}></i>
-                  </a>
-                  <div className="card-body p-0">
-                    <h4 className="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-                    <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                    <p className="text-muted mt-3"></p>
-                  </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="card border-0 mb-4 position-relative position-relative">
-                <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" className="card-img-top rounded-0" alt="..." />
-                  <a href="#" className="text-dark">
-                  <i className="far fa-heart position-absolute" style={{ right: '16px', top: '16px' }}></i>
-                  </a>
-                  <div className="card-body p-0">
-                    <h4 className="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-                    <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                    <p className="text-muted mt-3"></p>
-                  </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="card border-0 mb-4 position-relative position-relative">
-                <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" className="card-img-top rounded-0" alt="..." />
-                  <a href="#" className="text-dark">
-                  <i className="far fa-heart position-absolute" style={{ right: '16px', top: '16px' }}></i>
-                  </a>
-                  <div className="card-body p-0">
-                    <h4 className="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-                    <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                    <p className="text-muted mt-3"></p>
-                  </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="card border-0 mb-4 position-relative position-relative">
-                <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" className="card-img-top rounded-0" alt="..." />
-                  <a href="#" className="text-dark">
-                  <i className="far fa-heart position-absolute" style={{ right: '16px', top: '16px' }}></i>
-                  </a>
-                  <div className="card-body p-0">
-                    <h4 className="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-                    <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                    <p className="text-muted mt-3"></p>
-                  </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="card border-0 mb-4 position-relative position-relative">
-                <img src="https://images.unsplash.com/photo-1591843336741-9f1238f66758?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80" className="card-img-top rounded-0" alt="..."/>
-                  <a href="#" className="text-dark">
-                  <i className="far fa-heart position-absolute" style={{ right: '16px', top: '16px' }}></i>
-                  </a>
-                  <div className="card-body p-0">
-                    <h4 className="mb-0 mt-3"><a href="./detail.html">Lorem ipsum</a></h4>
-                    <p className="card-text mb-0">NT$1,080 <span className="text-muted "><del>NT$1,200</del></span></p>
-                    <p className="text-muted mt-3"></p>
-                  </div>
-              </div>
-            </div>
+                </div>
+
+                )
+              })
+            }
+            
+
           </div>
           <nav className="d-flex justify-content-center">
-            <ul className="pagination">
-              <li className="page-item">
-                <a className="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li className="page-item active"><a className="page-link" href="#">1</a></li>
-              <li className="page-item"><a className="page-link" href="#">2</a></li>
-              <li className="page-item"><a className="page-link" href="#">3</a></li>
-              <li className="page-item">
-                <a className="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
+            <Pagination pagination={pagination} changePage={getProducts}/>
           </nav>
         </div>
       </div>
