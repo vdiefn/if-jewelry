@@ -1,21 +1,40 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { Modal } from 'bootstrap'
+import axios from "axios"
 import OrderModal from "../../components/OrderModal"
 
 
 function AdminOrders(){
+  const [orders, setOrders] = useState([])
+  const [pagination, setPagination ] = useState({})
+
   const orderModal = useRef(null)
+  
+  // 
+  // getOrders = { getOrders }
   useEffect(() => {
-    orderModal.current = new Modal('#orderModal')
-    orderModal.current.show()
-  })
+    orderModal.current = new Modal('#orderModal', {
+      backdrop: 'static'
+    });
+   
+    (async () => {
+      const orderRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/orders`)
+      console.log(orderRes)
+      setOrders(orderRes.data.orders)
+      setPagination(orderRes.data.pagination)
+    })()
+
+  }, [])
 
   const openModal = () => {
     orderModal.current.show()
   }
+  const closeOrderModal = () => {
+    orderModal.current.hide()
+  }
   
   return (<div className="p-3">
-    <OrderModal />
+    <OrderModal closeOrderModal={closeOrderModal} />
     <h3>訂單列表</h3>
     <hr />
     <table className="table">
@@ -31,22 +50,29 @@ function AdminOrders(){
         </tr>
       </thead>
       <tbody>
-        <tr >
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <button type="button"  className="btn btn-primary btn-sm" onClick={openModal}>
-              編輯
-            </button>
-            <button type="button"className="btn btn-outline-danger btn-sm ms-2">
-              刪除
-            </button>
-          </td>
-        </tr>
+        {
+          orders.map((order) => {
+            return(
+              <tr key={order.id}>
+                <td>{order.user.name}</td>
+                <td></td>
+                <td>{order.is_paid}</td>
+                <td></td>
+                <td>{order.message}</td>
+                <td></td>
+                <td>
+                  <button type="button" className="btn btn-primary btn-sm" onClick={openModal}>
+                    編輯
+                  </button>
+                  <button type="button" className="btn btn-outline-danger btn-sm ms-2">
+                    刪除
+                  </button>
+                </td>
+              </tr>
+            )
+          })
+        }
+        
       </tbody>
     </table>
 
