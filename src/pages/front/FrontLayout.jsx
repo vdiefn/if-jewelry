@@ -1,25 +1,15 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useLocation } from "react-router-dom"
+import Navbar from "../../components/Navbar"
 
 function FrontLayout() {
+  const location = useLocation() //確認目前路由
+  
   return (<>
     <div className="position-relative">
-      <div className="position-absolute" style={{top:'0', bottom:'0', left:'0', right:'0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', backgroundPosition:'center center', opacity: '0.1'}}></div>
-      <div className="container d-flex flex-column" style={{minHeight:'100vh'}} >
-        <nav className="navbar navbar-expand-lg navbar-light">
-          <a className="navbar-brand" href="./index.html">Navbar</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <a className="nav-item nav-link me-4 active" href="./index.html">Home <span className="sr-only">(current)</span></a>
-              <a className="nav-item nav-link me-4" href="./product.html">Product</a>
-              <a className="nav-item nav-link me-4" href="./detail.html">Detail</a>
-              <a className="nav-item nav-link" href="./cart.html"><i className="fas fa-shopping-cart"></i></a>
-            </div>
-          </div>
-        </nav>
-        <div className="row justify-content-center my-auto">
+      <div className="position-absolute" style={{ top: '0', bottom: '0', left: '0', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', backgroundPosition: 'center center', opacity: '0.1' }}></div>
+      <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '100vh' : '5vh') }} >
+        <Navbar />
+        <div className="row justify-content-center my-auto" style={{ display: (location.pathname === '/' ? 'flex' : 'none') }}>
           <div className="col-md-4 text-center">
             <h2>Lorem ipsum.</h2>
             <p className="text-muted mb-0">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.</p>
@@ -28,7 +18,7 @@ function FrontLayout() {
         </div>
       </div>
     </div>
-
+    
     <Outlet></Outlet>
 
     <div className="bg-dark py-5">
