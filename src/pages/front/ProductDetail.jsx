@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useOutletContext } from 'react-router-dom'
 import axios from 'axios'
 
 function ProductDetail() {
@@ -7,6 +7,8 @@ function ProductDetail() {
   const [cartQuantity, setCartQuantity ] = useState(1)
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false)
+  const { getCart } = useOutletContext();
+  
 
   const getProduct = async (id) => {
     const productRes = await axios.get(
@@ -27,7 +29,9 @@ function ProductDetail() {
     try {
       const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/cart`, data)
       console.log(res)
+      getCart();
       setIsLoading(false)
+      
     } catch (error) {
       console.log(error)
       setIsLoading(false)

@@ -1,14 +1,32 @@
 import { Outlet, useLocation } from "react-router-dom"
+import { useEffect, useState } from "react"
+import axios from "axios"
 import Navbar from "../../components/Navbar"
+
 
 function FrontLayout() {
   const location = useLocation() //確認目前路由
-  
+  const [ cartData, setCartData ] = useState({})
+
+  const getCart = async() => {
+    try {
+      const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/cart`)
+      console.log('購物車',res)
+      setCartData(res.data.data)
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getCart()
+  }, [])
+
   return (<>
     <div className="position-relative">
       <div className="position-absolute" style={{ top: '0', bottom: '0', left: '0', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', backgroundPosition: 'center center', opacity: '0.1' }}></div>
       <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '100vh' : '10vh') }} >
-        <Navbar />
+        <Navbar cartData={cartData} />
         <div className="row justify-content-center my-auto" style={{ display: (location.pathname === '/' ? 'flex' : 'none') }}>
           <div className="col-md-4 text-center">
             <h2>Lorem ipsum.</h2>
@@ -19,8 +37,8 @@ function FrontLayout() {
       </div>
     </div>
     
-    <Outlet></Outlet>
-    <div className="bg-light py-4">
+    <Outlet context={{ getCart, cartData }}></Outlet>
+    <div className="bg-light py-4 mt-5">
       <div className="container">
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start">
           <p className="mb-0 fw-bold">Lorem ipsum dolor sit amet.</p>
