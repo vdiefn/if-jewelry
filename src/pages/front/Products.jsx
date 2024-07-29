@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from "react-router-dom"
 import axios from 'axios'
 
 import Pagination from '../../components/Pagination'
@@ -23,7 +24,7 @@ function Products(){
 
     <div className="container mt-md-5 mt-3 mb-7">
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-md-3">
           <div className="accordion border border-bottom border-top-0 border-start-0 border-end-0 mb-3" id="accordionExample">
             <div className="card border-0">
               <div className="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne">
@@ -90,18 +91,17 @@ function Products(){
             </div>
           </div>
         </div>
-        <div className="col-md-8">
+        <div className="col-md-8 ms-4">
           <div className="row">
             {
               products.map((product) => {
                 return (<div className="col-md-6" key={product.id}>
                   <div className="card border-0 mb-4 position-relative position-relative">
+                    <Link to={`/product/${product.id}`} className="text-dark">
                     <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height" alt="..." />
-                    <a href="#" className="text-dark">
-                      <i className="far fa-heart position-absolute" style={{ right: '16px', top: '16px' }}></i>
-                    </a>
+                    </Link>
                     <div className="card-body p-0">
-                      <h4 className="mb-0 mt-3"><a href="./detail.html">{product.title}</a></h4>
+                      <h4 className="mb-0 mt-3"><Link to={`/product/${product.id}`} >{product.title}</Link></h4>
                       <p className="card-text mb-0">NT${product.price} <span className="text-muted "><del>NT${product.origin_price}</del></span></p>
                       <p className="text-muted mt-3"></p>
                     </div>
@@ -120,21 +120,7 @@ function Products(){
         </div>
       </div>
     </div>
-    <div className="bg-light py-4">
-      <div className="container">
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start">
-          <p className="mb-0 fw-bold">Lorem ipsum dolor sit amet.</p>
-          <div className="input-group w-md-50 mt-md-0 mt-3">
-            <input type="text" className="form-control rounded-0" placeholder="" />
-            <div className="input-group-append">
-              <button className="btn btn-dark rounded-0" type="button" id="search">
-                Lorem ipsum
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </>)
 }
 

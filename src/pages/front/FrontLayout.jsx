@@ -7,7 +7,7 @@ function FrontLayout() {
   return (<>
     <div className="position-relative">
       <div className="position-absolute" style={{ top: '0', bottom: '0', left: '0', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', backgroundPosition: 'center center', opacity: '0.1' }}></div>
-      <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '100vh' : '5vh') }} >
+      <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '100vh' : '10vh') }} >
         <Navbar />
         <div className="row justify-content-center my-auto" style={{ display: (location.pathname === '/' ? 'flex' : 'none') }}>
           <div className="col-md-4 text-center">
@@ -20,7 +20,21 @@ function FrontLayout() {
     </div>
     
     <Outlet></Outlet>
-
+    <div className="bg-light py-4">
+      <div className="container">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start">
+          <p className="mb-0 fw-bold">Lorem ipsum dolor sit amet.</p>
+          <div className="input-group w-md-50 mt-md-0 mt-3">
+            <input type="text" className="form-control rounded-0" placeholder="" />
+            <div className="input-group-append">
+              <button className="btn btn-dark rounded-0" type="button" id="search">
+                Lorem ipsum
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div className="bg-dark py-5">
       <div className="container">
         <div className="d-flex align-items-center justify-content-between text-white mb-md-7 mb-4">

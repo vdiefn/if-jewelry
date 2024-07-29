@@ -121,21 +121,7 @@ function Home() {
         </div>
       </div>
     </div>
-    <div className="bg-light py-4">
-      <div className="container">
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start">
-          <p className="mb-0 fw-bold">Lorem ipsum dolor sit amet.</p>
-          <div className="input-group w-md-50 mt-md-0 mt-3">
-            <input type="text" className="form-control rounded-0" placeholder="" />
-            <div className="input-group-append">
-              <button className="btn btn-dark rounded-0" type="button" id="search">
-                Lorem ipsum
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
   
   </>
   )

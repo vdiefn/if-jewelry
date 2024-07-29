@@ -11,7 +11,7 @@ function Navbar(){
         <div className="navbar-nav">
           <NavLink className="nav-item nav-link me-4 active" to='/'>Home <span className="sr-only">(current)</span></NavLink>
           <NavLink className="nav-item nav-link me-4" to='/products'>產品列表</NavLink>
-          <NavLink className="nav-item nav-link me-4" href="./detail.html">Detai</NavLink>
+          <NavLink className="nav-item nav-link me-4" href="./detail.html">Detail</NavLink>
           <NavLink className="nav-item nav-link me-4" href="./cart.html"><i className="bi bi-cart-check"></i></NavLink>
         </div>
       </div>
