@@ -4,7 +4,9 @@ import axios from 'axios'
 
 function ProductDetail() {
   const [product, setProduct] = useState({});
+  const [cartQuantity, setCartQuantity ] = useState(1)
   const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(false)
 
   const getProduct = async (id) => {
     const productRes = await axios.get(
@@ -13,6 +15,25 @@ function ProductDetail() {
     console.log(productRes);
     setProduct(productRes.data.product)
   };
+
+  const addToCart = async() => {
+    const data = {
+      data: {
+        product_id: product.id,
+        qty: cartQuantity
+      }
+    }
+    setIsLoading(true)
+    try {
+      const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/cart`, data)
+      console.log(res)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+    }
+    
+  }
 
   useEffect(() => {
     getProduct(id);
@@ -53,26 +74,41 @@ function ProductDetail() {
             </ol>
           </nav>
           <h2 className="fw-bold h1 mb-1">{product.title}</h2>
-          <p className="mb-0 text-muted text-end"><del>NT${product.origin_price}</del></p>
-          <p className="h4 fw-bold text-end">NT${product.price}</p>
+          <p className="mb-0 text-muted text-end"><del>NT${product.price}</del></p>
+          <p className="h4 fw-bold text-end">NT${product.origin_price}</p>
           <div className="row align-items-center">
             <div className="col-6">
               <div className="input-group my-3 bg-light rounded">
                 <div className="input-group-prepend">
-                  <button className="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
-                    <i className="fas fa-minus"></i>
+                  <button className="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1" onClick={() => setCartQuantity((pre) => pre === 1 ? pre : pre - 1)}>
+                    <i className="bi bi-dash-circle"></i>
                   </button>
                 </div>
-                <input type="text" className="form-control border-0 text-center my-auto shadow-none bg-light" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                <input 
+                  type="number" 
+                  className="form-control border-0 text-center my-auto shadow-none bg-light" 
+                  placeholder="" 
+                  aria-label="Example text with button addon" 
+                  aria-describedby="button-addon1"
+                  value={cartQuantity} 
+                  readOnly />
                 <div className="input-group-append">
-                  <button className="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
-                    <i className="fas fa-plus"></i>
+                  <button className="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2" onClick={() => setCartQuantity((pre) => pre + 1)}>
+                    <i className="bi bi-plus-circle"></i>
                   </button>
                 </div>
               </div>
             </div>
             <div className="col-6">
-              <a href="./checkout.html" className="text-nowrap btn btn-dark w-100 py-2">購買</a>
+              <button 
+                type='button' 
+                href="./checkout.html" 
+                className="text-nowrap btn btn-dark w-100 py-2" 
+                onClick={()=>addToCart()}
+                disabled={isLoading}
+              >
+                加入購物車
+              </button>
             </div>
           </div>
         </div>
