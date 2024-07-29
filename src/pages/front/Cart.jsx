@@ -1,8 +1,19 @@
 import { useOutletContext } from 'react-router-dom'
+import axios from 'axios'
 
 function Cart() {
-  const { cartData } = useOutletContext()
-  console.log('cart:',cartData)
+  const { cartData, getCart } = useOutletContext()
+
+  const removeCartItem = async(id) => {
+    try {
+      const res = await axios.delete(`/v2/api/${import.meta.env.VITE_API_PATH}/cart/${id}`)
+      getCart()
+      console.log(res)
+    } catch(error){
+      console.log(error)
+    }
+
+  }
 
   return (<>
     <div className="mt-3 me-5 ms-5">
@@ -42,7 +53,14 @@ function Cart() {
                       </div>
                     </td>
                     <td className="border-0 align-middle"><p className="mb-0 ms-auto">NT${item.final_total}</p></td>
-                    <td className="border-0 align-middle"><i className="bi bi-lg"></i></td>
+                    <td className="border-0 align-middle">
+                      <button 
+                        type='button' 
+                        className='btn' 
+                        onClick={()=>{removeCartItem(item.id)}}>
+                        <i className="bi bi-x-lg"></i>
+                      </button>
+                    </td>
                   </tr>
 
                   )
