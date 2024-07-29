@@ -1,8 +1,10 @@
 import { useOutletContext } from 'react-router-dom'
 import axios from 'axios'
+import { useState } from 'react'
 
 function Cart() {
   const { cartData, getCart } = useOutletContext()
+  const [loadingItems, setLoadingItem ] = useState([])
 
   const removeCartItem = async(id) => {
     try {
@@ -12,20 +14,39 @@ function Cart() {
     } catch(error){
       console.log(error)
     }
-
   }
+
+  const updateCartItem = async (item, quantity) => {
+    const data = {
+      data: {
+        product_id: item.product_id,
+        qty: quantity
+      }
+    }
+    setLoadingItem([...loadingItems, item.id])
+    try {
+      const res = await axios.put(`/v2/api/${import.meta.env.VITE_API_PATH}/cart/${item.id}`, data)
+      setLoadingItem(loadingItems.filter((loadingObject) => loadingObject !== item.id ))
+      getCart()
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
 
   return (<>
     <div className="mt-3 me-5 ms-5">
-      <h3 className="mt-3 mb-4">Lorem ipsum</h3>
+      <h3 className="mt-3 mb-4">購物車</h3>
       <div className="row">
         <div className="col-md-8">
           <table className="table">
             <thead>
               <tr>
-                <th scope="col" className="border-0 ps-0">訂單資訊</th>
-                <th scope="col" className="border-0">Lorem ipsum</th>
-                <th scope="col" className="border-0">Lorem ipsum</th>
+                <th scope="col" className="border-0 ps-0">產品資訊</th>
+                <th scope="col" className="border-0">數量</th>
+                <th scope="col" className="border-0">小計</th>
                 <th scope="col" className="border-0"></th>
               </tr>
             </thead>
@@ -40,15 +61,24 @@ function Cart() {
                     <td className="border-0 align-middle" style={{ maxWidth: '160px' }}>
                       <div className="input-group pe-5">
                         <div className="input-group-prepend">
-                          <button className="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
-                            <i className="fas fa-minus"></i>
-                          </button>
                         </div>
-                        <input type="text" className="form-control border-0 text-center my-auto shadow-none" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                        <select 
+                          name="quantity" 
+                          className='form-select' 
+                          id='quantity' 
+                          value={item.qty}
+                          disabled={loadingItems.includes(item.id)} 
+                          onChange={(e) => {updateCartItem(item, e.target.value*1)}}>
+                          {
+                            [...(new Array(20))].map((i, num) => {
+                              return (
+                              <option value={num+1} key={num}>{num+1}</option>
+                              )
+                            })
+                          }
+                        </select>
+                        
                         <div className="input-group-append">
-                          <button className="btn btn-outline-dark border-0 py-2" type="button" id="button-addon2">
-                            <i className="fas fa-plus"></i>
-                          </button>
                         </div>
                       </div>
                     </td>
