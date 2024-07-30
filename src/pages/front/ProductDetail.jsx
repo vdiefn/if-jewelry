@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useOutletContext } from 'react-router-dom'
+import { useParams, useOutletContext, Link } from 'react-router-dom'
 import axios from 'axios'
 
 function ProductDetail() {
@@ -44,7 +44,7 @@ function ProductDetail() {
   }, [id]);
 
   return(<>
-    <div className="container">
+    <div className="container mt-5">
     <div className="row align-items-center">
       <div className="col-md-7">
         <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
@@ -72,9 +72,8 @@ function ProductDetail() {
         <div className="col-md-5">
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-white px-0 mb-0 py-3">
-              <li className="breadcrumb-item"><a className="text-muted" href="./index.html">Home</a></li>
-              <li className="breadcrumb-item"><a className="text-muted" href="./product.html">Product</a></li>
-              <li className="breadcrumb-item active" aria-current="page">Detail</li>
+              <li className="breadcrumb-item"><Link className="text-muted" to='/products'>回到產品列表</Link></li>
+              <li className="breadcrumb-item active" aria-current="page"></li>
             </ol>
           </nav>
           <h2 className="fw-bold h1 mb-1">{product.title}</h2>

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import Navbar from "../../components/Navbar"
 
-
 function FrontLayout() {
   const location = useLocation() //確認目前路由
   const [ cartData, setCartData ] = useState({})
@@ -23,7 +22,7 @@ function FrontLayout() {
   }, [])
 
   return (<>
-    <div className="position-relative">
+    <div className="position-relative" style={{ display: (location.pathname === 'success/orderId' ? 'none' : 'flex') }}>
       <div className="position-absolute" style={{ top: '0', bottom: '0', left: '0', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', backgroundPosition: 'center center', opacity: '0.1' }}></div>
       <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '100vh' : '10vh') }} >
         <Navbar cartData={cartData} />

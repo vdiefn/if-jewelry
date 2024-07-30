@@ -1,4 +1,4 @@
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext, Link } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
 
@@ -37,6 +37,7 @@ function Cart() {
 
 
   return (<>
+  <div className="container">
     <div className="mt-3 me-5 ms-5">
       <h3 className="mt-3 mb-4">購物車</h3>
       <div className="row">
@@ -124,12 +125,12 @@ function Cart() {
               <p className="mb-0 h4 fw-bold">總金額</p>
               <p className="mb-0 h4 fw-bold">NT${cartData.final_total}</p>
             </div>
-            <a href="./checkout.html" className="btn btn-dark w-100 mt-4">確認訂單正確</a>
+            <Link to='/checkout' className="btn btn-dark w-100 mt-4">進行結帳</Link>
           </div>
         </div>
       </div>
     </div>
-  
+  </div>
   </>)
 }
 

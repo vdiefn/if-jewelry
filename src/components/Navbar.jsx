@@ -9,9 +9,8 @@ function Navbar({ cartData }){
       </button>
       <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div className="navbar-nav">
-          <NavLink className="nav-item nav-link me-4 active" to='/'>Home <span className="sr-only">(current)</span></NavLink>
+          <NavLink className="nav-item nav-link me-4 active" to='/'>首頁 <span className="sr-only"></span></NavLink>
           <NavLink className="nav-item nav-link me-4" to='/products'>產品列表</NavLink>
-          <NavLink className="nav-item nav-link me-4" href="./detail.html">Detail</NavLink>
           <NavLink className="nav-item nav-link me-4 position-relative" to="/cart">
             <i className="bi bi-cart-check"></i>
             <span className="position-absolute top-2 start-100 translate-middle badge rounded-pill bg-danger">
