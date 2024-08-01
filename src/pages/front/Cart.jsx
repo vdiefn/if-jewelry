@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 function Cart() {
   const { cartData, getCart } = useOutletContext()
+  console.log(cartData)
   const [loadingItems, setLoadingItem ] = useState([])
 
   const removeCartItem = async(id) => {
@@ -28,7 +29,7 @@ function Cart() {
       const res = await axios.put(`/v2/api/${import.meta.env.VITE_API_PATH}/cart/${item.id}`, data)
       setLoadingItem(loadingItems.filter((loadingObject) => loadingObject !== item.id ))
       getCart()
-      console.log(res)
+
     } catch (error) {
       console.log(error)
     }
@@ -113,7 +114,7 @@ function Cart() {
               <tbody>
                 <tr>
                   <th scope="row" className="border-0 px-0 pt-4 font-weight-normal">金額</th>
-                  <td className="text-end border-0 px-0 pt-4">NT${cartData.final_total}</td>
+                    <td className="text-end border-0 px-0 pt-4">NT${cartData.final_total}</td>
                 </tr>
                 <tr>
                   <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">付款方式</th>

@@ -77,3 +77,24 @@ export const Select = ({
     </>
   );
 };
+
+export const TextArea = ({ 
+  errors, 
+  register, 
+  labelText, 
+  id, 
+  rules, 
+  defaultValue 
+}) => {
+  return (
+    <>
+    <div className='mb-2'>
+    <label className='form-label' htmlFor={id}>{labelText}</label>
+    <textarea id={id} rows='5' className={`form-control ${errors[id] && 'is-invalid'}`} defaultValue={defaultValue} name={id} {...register(id, rules)} />
+    {errors[id] && (
+      <div className='invalid-feedback'>{errors[id]?.message} </div>
+    )}
+  </div>
+  </>
+  )
+}

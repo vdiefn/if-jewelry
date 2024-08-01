@@ -29,8 +29,8 @@ function OrderModal({ closeOrderModal }){
                 <input
                   type='text'
                   id='name'
-                  placeholder='訂購人姓名'
                   name='name'
+                  placeholder=''
                   className='form-control mt-1'
                 />
               </label>
@@ -41,8 +41,8 @@ function OrderModal({ closeOrderModal }){
                 <input
                   type='email'
                   id='email'
-                  placeholder='Email'
                   name='email'
+                  placeholder=''
                   className='form-control mt-1'
                 />
               </label>
@@ -54,8 +54,8 @@ function OrderModal({ closeOrderModal }){
                 <input
                   type='text'
                   id='address'
-                  placeholder='請輸入地址'
                   name='address'
+                  placeholder=''
                   className='form-control mt-1'
                 />
               </label>
@@ -66,8 +66,8 @@ function OrderModal({ closeOrderModal }){
                 <textarea
                   type='text'
                   id='message'
-                  placeholder='快快到貨!'
                   name='message'
+                  placeholder=''
                   className='form-control mt-1'
                 />
               </label>

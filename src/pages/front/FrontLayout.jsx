@@ -1,10 +1,11 @@
-import { Outlet, useLocation } from "react-router-dom"
+import { Outlet, useLocation, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Navbar from "../../components/Navbar"
 
 function FrontLayout() {
   const location = useLocation() //確認目前路由
+  const { orderId } = useParams()
   const [ cartData, setCartData ] = useState({})
 
   const getCart = async() => {
@@ -17,12 +18,30 @@ function FrontLayout() {
     }
   }
 
+  const getParams = async() => {
+    try {
+      const res = await axios.get(
+        `/v2/api/${import.meta.env.VITE_API_PATH}/order/${orderId}`,
+      )
+      console.log('結帳資訊', res)
+      setCartData(res.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
   useEffect(() => {
     getCart()
   }, [])
+  
+  useEffect(() => {
+    getParams()
+  }, [])
+
+
 
   return (<>
-    <div className="position-relative" style={{ display: (location.pathname === 'success/orderId' ? 'none' : 'flex') }}>
+    <div className="position-relative" style={{ display: (location.pathname === `/success/${orderId}` ? 'none' : 'flex') }}>
       <div className="position-absolute" style={{ top: '0', bottom: '0', left: '0', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', backgroundPosition: 'center center', opacity: '0.1' }}></div>
       <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '100vh' : '10vh') }} >
         <Navbar cartData={cartData} />
@@ -30,11 +49,13 @@ function FrontLayout() {
           <div className="col-md-4 text-center">
             <h2>Lorem ipsum.</h2>
             <p className="text-muted mb-0">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.</p>
-            <button className="btn btn-dark rounded-0 mt-6">Lorem ipsum.</button>
           </div>
+          
         </div>
       </div>
     </div>
+    
+  
     
     <Outlet context={{ getCart, cartData }}></Outlet>
     <div className="bg-light py-4 mt-5">
@@ -48,6 +69,7 @@ function FrontLayout() {
                 Lorem ipsum
               </button>
             </div>
+            
           </div>
         </div>
       </div>

@@ -4,14 +4,14 @@ import axios from 'axios'
 
 function Success() {
   const { orderId } = useParams()
+  console.log('success:', orderId)
   const [ orderData, setOrderData ] = useState({})
-  
   const getCart = async(orderId) => {
     const res = await axios.get(
       `/v2/api/${import.meta.env.VITE_API_PATH}/order/${orderId}`,
     )
 
-    console.log(res)
+    console.log('success:', res)
     setOrderData(res.data.order)
   }
 
@@ -62,7 +62,7 @@ function Success() {
                       <li className='list-group-item px-0 pb-0'>
                         <div className='d-flex justify-content-between mt-2'>
                           <p className='mb-0 h5 fw-bold'>總金額</p>
-                          <p className='mb-0 h5 fw-bold'>NT${orderData.total}</p>
+                          <p className='mb-0 h5 fw-bold'>NT${orderData?.total}</p>
                         </div>
                       </li>
                       

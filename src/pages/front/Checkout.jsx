@@ -1,11 +1,14 @@
 import { Link, useOutletContext, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import { Input } from '../../components/FormElements'
+import { Input, TextArea } from '../../components/FormElements'
 
 
 function Checkout(){
-  const { cartData } = useOutletContext
+  const { cartData } = useOutletContext()
+ 
+  console.log(cartData)
+  
   const navigate = useNavigate()
   const {
     register,
@@ -15,9 +18,10 @@ function Checkout(){
     mode: 'onTouch'
   })
 
+  
+
   const onSubmit = async(data) => {
     const { name, email, tel, address} = data
-    
     const form = {
       data: {
         user: {
@@ -26,48 +30,45 @@ function Checkout(){
           tel,
           address
         }
-      }
+      },
+      message: data.message
     }
     const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/order`, form)
     console.log(res)
-    navigate(`/success/${res.data.orderId}`)
+    navigate(`/pay/${res.data.orderId}`)
   }
 
   return (<>
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-10">
-          <h3 className="fw-bold mb-4 pt-3">結帳</h3>
+          <h3 className="fw-bold mb-4 pt-3">訂單明細確認</h3>
         </div>
       </div>
       <div className="row flex-row-reverse justify-content-center pb-5">
         <div className="col-md-4">
           <div className="border p-4 mb-4">
-            <div className="d-flex">
-              <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" className="me-2" style={{width: '48px', height: '48px', objectFit: 'cover'}} />
-                <div className="w-100">
-                  <div className="d-flex justify-content-between">
-                    <p className="mb-0 fw-bold">Lorem ipsum</p>
-                    <p className="mb-0">NT$12,000</p>
+            {
+              cartData?.carts?.map((item) => {
+                return (<div className="d-flex mb-2" key={item.id}>
+                  <img src={item.product.imageUrl} alt="" className="me-2 object-fit" style={{ width: '48px', height: '48px', objectFit: 'cover' }} />
+                  <div className="w-100">
+                    <div className="d-flex justify-content-between">
+                      <p className="mb-0 fw-bold">{item.product.title}</p>
+                      <p className="mb-0">NT${item.final_total}</p>
+                    </div>
+                    <p className="mb-0 fw-bold">x&nbsp;{item.qty}</p>
                   </div>
-                  <p className="mb-0 fw-bold">x1</p>
                 </div>
-            </div>
-            <div className="d-flex mt-2">
-              <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" alt="" className="me-2" style={{ width: '48px', height: '48px', objectFit: 'cover' }} />
-                <div className="w-100">
-                  <div className="d-flex justify-content-between">
-                    <p className="mb-0 fw-bold">Lorem ipsum</p>
-                    <p className="mb-0">NT$12,000</p>
-                  </div>
-                  <p className="mb-0 fw-bold">x1</p>
-                </div>
-            </div>
+                )
+              })
+            }
+            
             <table className="table mt-4 border-top border-bottom text-muted">
               <tbody>
                 <tr>
                   <th scope="row" className="border-0 px-0 pt-4 font-weight-normal">小計</th>
-                  <td className="text-end border-0 px-0 pt-4">NT$24,000</td>
+                  <td className="text-end border-0 px-0 pt-4">NT${cartData?.final_total}</td>
                 </tr>
                 <tr>
                   <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">付款方式</th>
@@ -77,14 +78,14 @@ function Checkout(){
             </table>
             <div className="d-flex justify-content-between mt-4">
               <p className="mb-0 h4 fw-bold">總金額</p>
-              <p className="mb-0 h4 fw-bold">NT$24,000</p>
+              <p className="mb-0 h4 fw-bold">NT${cartData?.final_total}</p>
             </div>
           </div>
         </div>
         <div className="col-md-6">
           <form onSubmit={handleSubmit(onSubmit)}>
             <p>購買人資訊</p>
-            <div className="mb-0">
+            <div className="mb-2">
               <Input
                 id='email'
                 labelText='電子信箱'
@@ -148,8 +149,19 @@ function Checkout(){
               ></Input>
             </div> 
             <div className="mb-2">
-              <label htmlFor="ContactMessage" className="text-muted mb-0">留言</label>
-              <textarea className="form-control" rows="3" id="ContactMessage" placeholder="message ... "></textarea>
+              <TextArea
+                errors={errors}
+                register={register}
+                labelText='留言'
+                id='message'
+                rules={{
+                  required: {
+                    value: false,
+                    message: '請留下評論'
+                  }
+                }}
+                defaultValue=''
+              />
             </div>
             <div className="d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100">
               <Link to='/cart' className="btn btn-dark mt-md-0 mt-3">回上一頁</Link>

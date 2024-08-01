@@ -3,7 +3,7 @@
 }
 
 .img-height {
-  height: 250px;
+  height: 200px;
 }
 
 .react-loading {
@@ -18,4 +18,8 @@
   justify-content: center;
   align-items: center;
   backdrop-filter: 'blur(1px)'
+}
+
+.no-text-decoration {
+  text-decoration: none;
 }
