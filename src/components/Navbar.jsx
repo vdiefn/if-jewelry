@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 function Navbar({ cartData }){
   return(<>
     <nav className="navbar navbar-expand-lg navbar-light">
-      <NavLink className="navbar-brand" to='/'>If Jewelry</NavLink>
+      <NavLink className="navbar-brand" to='/'>如果：珠寶 If Jewelry</NavLink>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>

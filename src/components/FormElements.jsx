@@ -39,7 +39,7 @@ export const Input = ({ id, labelText, register, type, errors, rules }) => {
       <input
         id={id}
         type={type}
-        className={`form-control ${errors[id] && 'is-invalid'}`}
+        className={`form-control ${errors[id] && 'is-invalid'} input-control control`}
         {...register(id, rules)}
       />
       {errors[id] && (

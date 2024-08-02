@@ -43,12 +43,15 @@ function FrontLayout() {
   return (<>
     <div className="position-relative" style={{ display: (location.pathname === `/success/${orderId}` ? 'none' : 'flex') }}>
       <div className="position-absolute" style={{ top: '0', bottom: '0', left: '0', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', backgroundPosition: 'center center', opacity: '0.1' }}></div>
-      <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '100vh' : '10vh') }} >
+      <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '80vh' : '10vh') }} >
         <Navbar cartData={cartData} />
         <div className="row justify-content-center my-auto" style={{ display: (location.pathname === '/' ? 'flex' : 'none') }}>
           <div className="col-md-4 text-center">
-            <h2>Lorem ipsum.</h2>
-            <p className="text-muted mb-0">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.</p>
+            <h2>If Jewelry</h2>
+            <p className="text-muted mb-0">如果，代表一切可能。</p>
+            <p className="text-muted mb-0">如果，代表所有機會。</p>
+            <p className="text-muted mb-0">如果，代表所有改變。</p>
+            <p className="text-muted mb-0">如果，讓我……</p>
           </div>
           
         </div>

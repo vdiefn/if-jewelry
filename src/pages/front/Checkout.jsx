@@ -72,7 +72,7 @@ function Checkout(){
                 </tr>
                 <tr>
                   <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">付款方式</th>
-                  <td className="text-end border-0 px-0 pt-0 pb-4">ApplePay</td>
+                  <td className="text-end border-0 px-0 pt-0 pb-4">信用卡一次付清</td>
                 </tr>
               </tbody>
             </table>

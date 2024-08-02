@@ -72,7 +72,7 @@ function ProductDetail() {
         <div className="col-md-5">
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-white px-0 mb-0 py-3">
-              <li className="breadcrumb-item"><Link className="text-muted" to='/products'>回到產品列表</Link></li>
+              <li className="breadcrumb-item"><Link className="text-muted text-decoration-none" to='/products'>回到產品列表</Link></li>
               <li className="breadcrumb-item active" aria-current="page"></li>
             </ol>
           </nav>

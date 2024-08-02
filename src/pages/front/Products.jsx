@@ -107,7 +107,7 @@ function Products(){
                     <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height" alt="..." />
                     </Link>
                     <div className="card-body p-0">
-                      <h4 className="mb-0 mt-3"><Link to={`/product/${product.id}`} >{product.title}</Link></h4>
+                      <h4 className="mb-0 mt-3"><Link to={`/product/${product.id}`} className="text-decoration-none">{product.title}</Link></h4>
                       <p className="card-text mb-0">NT${product.origin_price} <span className="text-muted "><del>NT${product.price}</del></span></p>
                       <p className="text-muted mt-3"></p>
                     </div>
