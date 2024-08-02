@@ -6,8 +6,8 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
   const [tempData, setTempData] = useState({
     title: "",
     category: "",
-    origin_price: 100,
-    price: 300,
+    origin_price: 300,
+    price: 100,
     unit: "",
     description: "",
     content: "",
@@ -24,8 +24,8 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
       setTempData({
         title: "",
         category: "",
-        origin_price: 100,
-        price: 300,
+        origin_price: 200,
+        price: 100,
         unit: "",
         description: "",
         content: "",
@@ -34,6 +34,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
       })
     } else if(type ==='edit') {
       setTempData(tempProduct)
+      console.log('tempProduct:',tempProduct)
     }
   }, [type, tempProduct])
 
@@ -95,7 +96,6 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     } catch (error) {
       console.log(error)
     }
-
   } 
 
  

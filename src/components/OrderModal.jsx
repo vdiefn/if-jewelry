@@ -2,7 +2,7 @@ import { useContext, useEffect, useState} from "react"
 
 import axios from "axios"
 
-function OrderModal({ closeOrderModal }){
+function OrderModal({ closeOrderModal, getOrders, tempOrder }){
 
 
   return (

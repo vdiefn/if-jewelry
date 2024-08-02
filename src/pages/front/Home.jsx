@@ -23,7 +23,7 @@ function Home() {
     
   return(<>
     <div className="container">
-      <div className="row mt-5 mb-2">
+      <div className="row mb-2">
       {
           products?.slice(0, 3).map((product) => {
           return(<>

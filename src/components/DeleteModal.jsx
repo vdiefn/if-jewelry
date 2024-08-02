@@ -1,6 +1,5 @@
 function DeleteModal({close, text, handleDelete, id}) {
   
-
   return (
     <div
       className='modal fade'
@@ -12,7 +11,7 @@ function DeleteModal({close, text, handleDelete, id}) {
       <div className='modal-dialog'>
         <div className='modal-content'>
           <div className='modal-header bg-danger'>
-            <h1 className='modal-title text-white fs-5' id='exampleModalLabel'>
+            <h1 className='modal-title text-white fs-5' id='deleteModal'>
               刪除確認
             </h1>
             <button
