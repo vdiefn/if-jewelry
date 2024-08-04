@@ -39,7 +39,6 @@ function Home() {
                     <h4 >{product.title}</h4>
                   <div className="d-flex justify-content-between">
                     <p className="card-text text-muted mb-0">
-                      {product.content}
                     </p>
                   </div>
                 </div>

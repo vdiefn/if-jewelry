@@ -6,7 +6,7 @@ import { Input, TextArea } from '../../components/FormElements'
 
 function Checkout(){
   const { cartData } = useOutletContext()
-  console.log(cartData)
+  console.log('checkout:',cartData)
 
   
   const navigate = useNavigate()

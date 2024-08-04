@@ -117,11 +117,11 @@ function ProductDetail() {
         </div>
     </div>
     <div className="row my-5">
-      <div className="col-md-4">
-        <p>{product.description}Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et</p>
+        <div className="col-md-4 text-muted ">
+          <p>{product.description}</p>
       </div>
-      <div className="col-md-3">
-        <p className="text-muted">{product.content}Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor</p>
+      <div className="col-md-8">
+          <p className="pre-wrap" >{product.content}</p>
       </div>
     </div>
     </div>     

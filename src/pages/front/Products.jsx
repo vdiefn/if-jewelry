@@ -35,12 +35,13 @@ function Products(){
             <div className="card border-0">
               <div className="card-header px-0 py-4 bg-white border border-bottom-0 border-top border-start-0 border-end-0 rounded-0" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne">
                 <div className="d-flex justify-content-between align-items-center pe-1">
-                  <h4 className="mb-0">
-                    Lorem ipsum
-                  </h4>
+                  <h5 className="mb-0">
+                    項鍊
+                  </h5>
                   <i className="fas fa-chevron-down"></i>
                 </div>
               </div>
+
               <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div className="card-body py-0">
                   <ul className="list-unstyled">
@@ -97,6 +98,7 @@ function Products(){
             </div>
           </div>
         </div>
+    
         <div className="col-md-8 ms-4">
           <div className="row">
             {

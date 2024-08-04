@@ -11,7 +11,6 @@ function FrontLayout() {
   const getCart = async() => {
     try {
       const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/cart`)
-      console.log('購物車',res)
       setCartData(res.data.data)
     } catch(error) {
       console.log(error)
