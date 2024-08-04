@@ -3,13 +3,14 @@ import { Modal } from 'bootstrap'
 import axios from "axios"
 import OrderModal from "../../components/OrderModal"
 import DeleteModal from "../../components/DeleteModal"
+import Pagination from "../../components/Pagination"
 
 
 function AdminOrders(){
   const [orders, setOrders] = useState([])
   const [pagination, setPagination ] = useState({})
   const [tempOrder, setTempOrder] = useState({})
-
+  
   const orderModal = useRef(null)
   const deleteModal = useRef(null)
   
@@ -20,12 +21,13 @@ function AdminOrders(){
     deleteModal.current = new Modal('#deleteModal', {
       backdrop: 'static'
     })
-   
     getOrders()
   }, [])
 
-  const getOrders = async () => {
-    const orderRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/orders`)
+  
+
+  const getOrders = async (page=1) => {
+    const orderRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/orders?page=${page}`)
     console.log(orderRes)
     setOrders(orderRes.data.orders)
     setPagination(orderRes.data.pagination)
@@ -33,7 +35,7 @@ function AdminOrders(){
  
 
   const openModal = (order) => {
-    setTempOrder(order);
+    setTempOrder(order)
     orderModal.current.show()
   }
   const closeOrderModal = () => {
@@ -66,8 +68,9 @@ function AdminOrders(){
   return (<div className="p-3">
     <OrderModal 
       closeOrderModal={closeOrderModal} 
-      getProducts={getOrders}
-      tempProduct={tempOrder} />
+      getOrders={getOrders}
+      tempOrder={tempOrder} 
+    />
     <DeleteModal 
       close={closeDeleteModal} 
       text={tempOrder.id} 
@@ -84,7 +87,7 @@ function AdminOrders(){
           <th scope="col">購買用戶</th>
           <th scope="col">訂單金額</th>
           <th scope="col">付款狀態</th>
-          <th scope="col">編輯</th>
+          <th scope="col">訂單內容</th>
         </tr>
       </thead>
       <tbody>
@@ -98,10 +101,18 @@ function AdminOrders(){
                 <td>{order.total}</td>
                 <td>{order.is_paid? '已付款': '未付款'}</td>
                 <td>
-                  <button type="button" className="btn btn-primary btn-sm" onClick={openModal}>
-                    編輯
+                  <button 
+                    type="button" 
+                    className="btn btn-primary btn-sm" 
+                    onClick={()=> openModal(order)}
+                  >
+                    明細
                   </button>
-                  <button type="button" className="btn btn-outline-danger btn-sm ms-2" onClick={()=>openDeleteModal(order)}>
+                  <button 
+                    type="button" 
+                    className="btn btn-outline-danger btn-sm ms-2" 
+                    onClick={()=>openDeleteModal(order)}
+                  >
                     刪除
                   </button>
                 </td>
@@ -114,26 +125,7 @@ function AdminOrders(){
     </table>
 
     <nav aria-label='Page navigation example'>
-      <ul className='pagination'>
-        <li className='page-item'>
-          <a className='page-link disabled' href='/' aria-label='Previous'>
-            <span aria-hidden='true'>&laquo;</span>
-          </a>
-        </li>
-        {[...new Array(5)].map((_, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <li className='page-item' key={`${i}_page`}>
-            <a className={`page-link ${i + 1 === 1 && 'active'}`} href='/'>
-              {i + 1}
-            </a>
-          </li>
-        ))}
-        <li className='page-item'>
-          <a className='page-link' href='/' aria-label='Next'>
-            <span aria-hidden='true'>&raquo;</span>
-          </a>
-        </li>
-      </ul>
+      <Pagination pagination={pagination} changePage={getOrders}/>
     </nav>
 
   </div>)
