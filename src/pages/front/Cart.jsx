@@ -1,10 +1,12 @@
 import { useOutletContext, Link } from 'react-router-dom'
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function Cart() {
   const { cartData, getCart } = useOutletContext()
-  console.log(cartData)
+  const [couponData, setCouponData] = useState('')
+  const [getCost, setGetCost] =  useState({})
+  console.log(getCost)
   const [loadingItems, setLoadingItem ] = useState([])
 
   const removeCartItem = async(id) => {
@@ -34,6 +36,26 @@ function Cart() {
       console.log(error)
     }
   }
+
+  const getCoupon = async() => {
+    const data = {
+      data: {
+        code: couponData
+    }}
+    try{
+      const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/coupon`, data)
+      console.log(res.data)
+      setGetCost(res.data)
+      console.log(getCost)
+    } catch(error){
+      console.log(error)
+    }
+  }
+
+  const handleChange = (e) => {
+    setCouponData(e.target.value)
+  };
+
 
 
 
@@ -100,11 +122,25 @@ function Cart() {
               }
             </tbody>
           </table>
-          <div className="input-group w-50 mb-3">
-            <input type="text" className="form-control rounded-0 border-bottom border-top-0 border-start-0 border-end-0 shadow-none" placeholder="優惠券號碼" aria-label="Recipient's username" aria-describedby="button-addon2" />
-              <div className="input-group-append">
-                <button className="btn btn-outline-dark border-bottom border-top-0 border-start-0 border-end-0 rounded-0" type="button" id="button-addon2"><i className="fas fa-paper-plane"></i></button>
-              </div>
+          <div className="input-group w-100 mb-3">
+            <input 
+              type="text" 
+              className="form-control rounded-0 border-bottom border-top-0 border-start-0 border-end-0 shadow-none" placeholder="優惠券號碼" 
+              aria-label="Recipient's username" 
+              aria-describedby="button-addon2"
+              onChange={handleChange}
+              value={couponData}
+            />
+            <button 
+              className="btn btn-dark border-bottom border-top-0 border-start-0 border-end-0 rounded-0" 
+              type="button" 
+              id="button-addon2" 
+              onClick={() => getCoupon()}>
+                加入優惠券
+            </button>
+
+              {/* <div className="input-group-append">
+              </div> */}
           </div>
         </div>
         <div className="col-md-4">
@@ -114,17 +150,24 @@ function Cart() {
               <tbody>
                 <tr>
                   <th scope="row" className="border-0 px-0 pt-4 font-weight-normal">金額</th>
-                    <td className="text-end border-0 px-0 pt-4">NT${cartData.final_total}</td>
+                    <td className="text-end border-0 px-0 pt-4">NT${cartData?.final_total || ''}</td>
                 </tr>
                 <tr>
                   <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">付款方式</th>
                   <td className="text-end border-0 px-0 pt-0 pb-4">信用卡一次付清</td>
                 </tr>
+                <tr>
+                  <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">使用優惠券</th>
+                  <td className="text-end border-0 px-0 pt-0 pb-4">{couponData.length > 0? '是' : '否'}</td>
+                </tr>
               </tbody>
             </table>
             <div className="d-flex justify-content-between mt-4">
-              <p className="mb-0 h4 fw-bold">總金額</p>
-              <p className="mb-0 h4 fw-bold">NT${cartData.final_total}</p>
+              <p className="mb-0 h5 fw-bold">
+                {couponData.length>0? '折扣後金額':'總金額'}
+              </p>
+                <p className="mb-0 h5 fw-bold">NT${couponData.length === 0 ? cartData?.final_total: getCost?.data?.final_total}</p>
+              
             </div>
             <Link to='/checkout' className="btn btn-dark w-100 mt-4">進行結帳</Link>
           </div>

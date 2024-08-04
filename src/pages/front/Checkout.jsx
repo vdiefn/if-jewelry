@@ -6,8 +6,8 @@ import { Input, TextArea } from '../../components/FormElements'
 
 function Checkout(){
   const { cartData } = useOutletContext()
- 
   console.log(cartData)
+
   
   const navigate = useNavigate()
   const {
@@ -18,7 +18,6 @@ function Checkout(){
     mode: 'onTouch'
   })
 
-  
 
   const onSubmit = async(data) => {
     const { name, email, tel, address} = data
