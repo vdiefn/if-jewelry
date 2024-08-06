@@ -39,7 +39,6 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
   }, [type, tempProduct])
 
   const handleChange = (e) => {
-    console.log(e)
     const { value, name } = e.target
     if(['price', 'origin_price'].includes(name)){
       setTempData({
@@ -73,6 +72,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
           data: tempData
         }
       )
+      console.log('res', res)
       handleSuccessMessage(dispatch, res)
       closeProductModal() 
       getProducts()
@@ -84,6 +84,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
   }
 
   const uploadFile = async (file) => {
+    
     console.log(file);
     if (!file) {
       return
@@ -93,6 +94,10 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     try {
       const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/upload`, formData)
       console.log(res)
+      setTempData({
+        ...tempData,
+        imageUrl: res.data.imageUrl
+      })
     } catch (error) {
       console.log(error)
     }

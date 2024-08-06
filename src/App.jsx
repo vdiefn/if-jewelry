@@ -5,6 +5,7 @@ import Dashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/AdminProducts'
 import AdminCoupons from './pages/admin/AdminCoupons'
 import AdminOrders from './pages/admin/AdminOrders'
+import AdminArticles from './pages/admin/AdminArticles'
 import FrontLayout from './pages/front/FrontLayout'
 import Home from './pages/front/Home'
 import Products from './pages/front/Products'
@@ -34,6 +35,7 @@ function App() {
           <Route path='products' element={<AdminProducts />}></Route>
           <Route path='coupons' element={<AdminCoupons />}></Route>
           <Route path='orders' element={<AdminOrders />}></Route>
+          <Route path='articles' element={<AdminArticles />}></Route>
         </Route>
       </Routes>
 

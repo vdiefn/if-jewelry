@@ -6,33 +6,14 @@ function OrderModal({ closeOrderModal, getOrders, tempOrder }){
   const [tempData, setTempData] = useState({
     ...tempOrder,
     is_paid: '',
-    // status: 0,
   })
 
   useEffect(() => {
     setTempData({
       ...tempOrder,
       is_paid: tempOrder.is_paid,
-      // status: tempOrder.status,
     })
   }, [tempOrder])
-
-  // const handleChange = (e) => {
-  //   console.log(e.target.value)
-  //   const { value, name } = e.target
-  //  if (name === 'is_paid') {
-  //     setTempData({
-  //       ...tempData,
-  //       [name]: +e.target.checked
-  //     })
-  //   } else {
-  //     setTempData({
-  //       ...tempData,
-  //       [name]: value
-  //     })
-  //   }
-  //   console.log(tempData)
-  // }
 
   const handleChange = (e) => {
     const { name, value } = e.target;

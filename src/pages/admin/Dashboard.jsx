@@ -73,7 +73,7 @@ function Dashboard(){
         <div className="bg-light" style={{ width: '200px' }}>
           <ul className="list-group list-group-flush">
             <Link className="list-group-item list-group-item-action py-3" to="/admin/products">
-              <i className="bi bi-cup-fill me-2" />
+              <i className="bi bi-box-seam me-2"></i>
               產品列表
             </Link>
             <Link className="list-group-item list-group-item-action py-3" to="/admin/coupons">
@@ -83,6 +83,10 @@ function Dashboard(){
             <Link className="list-group-item list-group-item-action py-3" to="/admin/orders">
               <i className="bi bi-receipt me-2" />
               訂單列表
+            </Link>
+            <Link className="list-group-item list-group-item-action py-3" to="/admin/articles">
+              <i className="bi bi-journal-bookmark-fill me-2"></i>
+              常見問題列表
             </Link>
           </ul>
         </div>
