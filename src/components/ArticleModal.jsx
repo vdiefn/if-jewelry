@@ -10,11 +10,11 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
       title: "",
       description: "",
       image: "",
-      tag: [],
-      create_at: 1555459200,
+      tag: ['tag1', 'tage2'],
+      create_at: 123455,
       author: "",
       isPublic: false,
-      content: ""
+      content: "123"
     }
   )
 
@@ -30,17 +30,22 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
         isPublic: false,
         content: ""
       })
+      setDate(new Date())
     } else if(type === 'edit') {
-      console.log('tempData:', tempData)
       setTempData(tempArticle)
-      console.log('tempArticle:', tempArticle)
+      setDate(new Date(tempArticle.create_at))
     }
   }, [type, tempArticle])
 
   const handleChange = (e) => {
     const { value, name } = e.target
+    
     if(name === 'isPublic'){
       setTempData((pre) => ({ ...pre, [name]: e.target.checked }))
+    } else if (['knowledge', 'maintainance', 'purchase', 'return', 'other'].includes(name)){
+      console.log(e.target.value)
+      setTempData((pre) => ({ ...pre, tag: tempData.tag.push(e.target.name)}))
+      
     } else {
       setTempData((pre) => ({ ...pre, [name]: value }))
     }
@@ -59,7 +64,11 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
       const res = await axios[method](
         api,
         {
-          data: tempData
+          data: {
+            ...tempData,
+            create_at: date.getTime()//轉換成unix timeStamp
+          }
+         
         }
       )
 
@@ -82,7 +91,7 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
       console.log(res)
       setTempData({
         ...tempData,
-        imageUrl: res.data.image
+        image: res.data.image
       })
     } catch (error) {
       console.log(error)
@@ -141,9 +150,8 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
                   )}
                 </div>
                 <img src="" alt='' className='img-fluid' />
-
               </div>
-              
+
               <div className='col-sm-8'>
                 <div className='form-group mb-2'>
                   <label className='w-100' htmlFor='title'>
@@ -159,6 +167,7 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
                     />
                   </label>
                 </div>
+
 
                 <div className='row'>
                   <div className='form-group mb-2 col-md-6'>
@@ -184,13 +193,86 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
                         name='create_at'
                         placeholder='日期'
                         className='form-control'
-                        onChange={handleChange}
-                        value={tempData.create_at || ''}
-                          
+                        onChange={(e) => {
+                          console.log(e)
+                          setDate(new Date(e.target.value))
+                          console.log(date)
+                        }}
+                        value={`${date.getFullYear().toString()}-${(
+                          date.getMonth() + 1
+                        )
+                          .toString()
+                          .padStart(2, 0)}-${date
+                            .getDate()
+                            .toString()
+                            .padStart(2, 0)}`}
                       />
                     </label>
                   </div>
                 </div>
+
+                <div className='col-sm-12'>
+                  <div className='form-group mb-2'>
+                    <label className='w-100' htmlFor='content'>
+                      次標題
+                      <input
+                        type='text'
+                        id='content'
+                        name='content'
+                        placeholder=''
+                        className='form-control'
+                        onChange={handleChange}
+                        value={tempData.content || ''}
+                      />
+                    </label>
+                  </div>
+
+                  <div className='row'>
+                    <div className='form-group mb-2 col-md-12'>
+                      分類
+                      <div className="multiSelect">
+                        <div className="selectBtn" data-title="多選選單，請選擇"></div>
+                        <div className="optionGroup" >
+                          <label><input
+                            className='me-1'
+                            id='knowledge'
+                            name='knowledge'
+                            type="checkbox"
+                            onChange={handleChange}
+                            value='knowledge'
+                          />知識</label>
+                          <label><input
+                            className='ms-2 me-1'
+                            name='maintainance'
+                            value='maintainance'
+                            type="checkbox"
+                            onChange={handleChange}
+                          />保養</label>
+                          <label><input
+                            className='ms-2 me-1'
+                            name='purchase'
+                            value='purchase'
+                            type="checkbox"
+                            onChange={handleChange}
+                          />購買注意事項</label>
+                          <label><input
+                            className='ms-2 me-1'
+                            name='return'
+                            value='return'
+                            type="checkbox"
+                            onChange={handleChange}
+                          />退貨注意事項</label>
+                          <label><input
+                            className='ms-2 me-1'
+                            name='other'
+                            type="checkbox"
+                            onChange={handleChange}
+                          />其他</label>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                 <div className='form-group mb-2'>
                   <label className='w-100' htmlFor='description'>
@@ -230,7 +312,7 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
                 </div>
               </div>
 
-               
+              </div>
                     
             </div>
           </div>

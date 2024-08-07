@@ -62,10 +62,10 @@ function AdminArticles(){
 
 
   const getArticles = async(page=1) =>{
-    const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/articles?page=${page}`)
+    const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/articles`)
     console.log(res)
     setArticles(res.data.articles)
-    setPagination(res.data.pagination)
+    // setPagination(res.data.pagination)
   }
 
   return(<>
@@ -109,7 +109,7 @@ function AdminArticles(){
           return (
             <tr key={article.id}>
               <td>{article.tag}</td>
-              <td>{article.create_at}</td>
+              <td>{new Date(article.create_at).toDateString()}</td>
               <td>{article.title}</td>
               <td>{article.author}</td>
               <td>{article.isPublic ? '公開' : '隱藏'}</td>
