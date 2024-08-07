@@ -3,42 +3,91 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 
-function ArticleModal({closeArticleModal, closeModal, getArticles}){
+function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
+  const [date, setDate] = useState(new Date())
+
   const [tempData, setTempData] = useState({
       title: "",
       description: "",
       image: "",
       tag: [],
-      create_at: '1555459200',
+      create_at: 1555459200,
       author: "",
       isPublic: false,
-      content: "123"
+      content: ""
     }
   )
 
+  useEffect(() => {
+    if(type === 'create'){
+      setTempData({
+        title: "",
+        description: "",
+        image: "",
+        tag: [],
+        create_at: 1555459200,
+        author: "",
+        isPublic: false,
+        content: ""
+      })
+    } else if(type === 'edit') {
+      console.log('tempData:', tempData)
+      setTempData(tempArticle)
+      console.log('tempArticle:', tempArticle)
+    }
+  }, [type, tempArticle])
+
   const handleChange = (e) => {
     const { value, name } = e.target
-    setTempData((pre) => ({ ...pre, [name]: value }))
+    if(name === 'isPublic'){
+      setTempData((pre) => ({ ...pre, [name]: e.target.checked }))
+    } else {
+      setTempData((pre) => ({ ...pre, [name]: value }))
+    }
   }
-  console.log(tempData)
+  
   
   const submit = async() => {
     try {
-      const res = await axios.post(
-        `/v2/api/${import.meta.env.VITE_API_PATH}/admin/article`, {
-          data:tempData
+      let api = `/v2/api/${import.meta.env.VITE_API_PATH}/admin/article`
+      let method = 'post'
+      console.log(type)
+      if(type === 'edit'){
+        api = `/v2/api/${import.meta.env.VITE_API_PATH}/admin/article/${tempArticle.id}`
+        method='put'
+      }
+      const res = await axios[method](
+        api,
+        {
+          data: tempData
         }
-      );
-      console.log(res)
+      )
 
     } catch(error) {
       console.log(error)
     }
 
-    closeModal()
+    closeArticleModal()
     getArticles()
   }
 
+  const uploadFile = async (file) => {
+    if (!file) {
+      return
+    }
+    const formData = new FormData()
+    formData.append('file-to-upload', file)
+    try {
+      const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/upload`, formData)
+      console.log(res)
+      setTempData({
+        ...tempData,
+        imageUrl: res.data.image
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  } 
 
 
   return (<>
@@ -53,7 +102,9 @@ function ArticleModal({closeArticleModal, closeModal, getArticles}){
         <div className='modal-content'>
           <div className='modal-header'>
             <h1 className='modal-title fs-5' id='articleModal'>
-              建立新內容
+              {
+                type === 'create' ? '建立新內容' : `編輯：${tempData.title}`
+              }
             </h1>
             <button
               type='button'
@@ -70,17 +121,29 @@ function ArticleModal({closeArticleModal, closeModal, getArticles}){
                     輸入圖片網址
                     <input
                       type='text'
-                      name='imageUrl'
+                      name='image'
                       id='image'
                       placeholder='請輸入圖片連結'
                       className='form-control'
                       onChange={handleChange}
-                      value={tempData.imageUrl || ''}
+                      value={tempData.image || ''}
                     />
                   </label>
                 </div>
+                <div className='form-group mb-2'>
+                  <label className='w-100' htmlFor='customFile'>
+                    或 上傳圖片
+                    <input type="file" id='customFile' className='form-control mt-1' name="file-to-upload" onChange={(e) => uploadFile(e.target.files[0])} />
+                  </label>
+                  <hr className='my-4' />
+                  {tempData.image && (
+                    <img src={tempData.image} className='img-fluid' alt='' />
+                  )}
+                </div>
+                <img src="" alt='' className='img-fluid' />
 
               </div>
+              
               <div className='col-sm-8'>
                 <div className='form-group mb-2'>
                   <label className='w-100' htmlFor='title'>
@@ -96,8 +159,6 @@ function ArticleModal({closeArticleModal, closeModal, getArticles}){
                     />
                   </label>
                 </div>
-
-                
 
                 <div className='row'>
                   <div className='form-group mb-2 col-md-6'>
@@ -123,14 +184,14 @@ function ArticleModal({closeArticleModal, closeModal, getArticles}){
                         name='create_at'
                         placeholder='日期'
                         className='form-control'
-                        onChange={handleChange} 
+                        onChange={handleChange}
                         value={tempData.create_at || ''}
                           
                       />
                     </label>
                   </div>
                 </div>
-                <hr />
+
                 <div className='form-group mb-2'>
                   <label className='w-100' htmlFor='description'>
                     文章內容
@@ -147,6 +208,7 @@ function ArticleModal({closeArticleModal, closeModal, getArticles}){
                     />
                   </label>
                 </div>
+                
                 <div className='form-group mb-2'>
                   <div className='form-check'>
                     <label
@@ -156,17 +218,20 @@ function ArticleModal({closeArticleModal, closeModal, getArticles}){
                       是否公開
                       <input
                         type='checkbox'
-                        id='is_public'
-                        name='is_public'
+                        id='isPublic'
+                        name='isPublic'
                         placeholder=''
                         className='form-check-input'
                         onChange={handleChange}
-                        value={tempData.is_public ||''}
+                        checked={tempData.isPublic}
                       />
                     </label>
                   </div>
                 </div>
               </div>
+
+               
+                    
             </div>
           </div>
           <div className='modal-footer'>
