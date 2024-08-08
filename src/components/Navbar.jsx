@@ -11,6 +11,7 @@ function Navbar({ cartData }){
         <div className="navbar-nav">
           <NavLink className="nav-item nav-link me-4 active" to='/'>首頁 <span className="sr-only"></span></NavLink>
           <NavLink className="nav-item nav-link me-4" to='/products'>產品列表</NavLink>
+          <NavLink className="nav-item nav-link me-4" to='/articles'>關於</NavLink>
           <NavLink className="nav-item nav-link me-4 position-relative" to="/cart">
             <i className="bi bi-cart-check"></i>
             

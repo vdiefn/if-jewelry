@@ -32,7 +32,7 @@ function AdminArticles(){
   }  
 
 
-  const closeArticleModal = () => {
+  const closeModal = () => {
     articleModal.current.hide()
   }
 
@@ -70,13 +70,13 @@ function AdminArticles(){
 
   return(<>
     <ArticleModal 
-      closeArticleModal={closeArticleModal} 
+      closeModal={closeModal} 
       getArticles={getArticles} 
       tempArticle={tempArticle}
       type={type}
     />
     <DeleteModal 
-      closr={closeDeleteModal}
+      close={closeDeleteModal}
       text={tempArticle.title}
       handleDelete={deleteArticle}
       id={tempArticle.id}

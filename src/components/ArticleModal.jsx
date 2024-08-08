@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 
-function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
+function ArticleModal({closeModal, getArticles, tempArticle, type}){
   const [date, setDate] = useState(new Date())
 
   const [tempData, setTempData] = useState({
@@ -76,7 +76,7 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
       console.log(error)
     }
 
-    closeArticleModal()
+    closeModal()
     getArticles()
   }
 
@@ -119,7 +119,7 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
               type='button'
               className='btn-close'
               aria-label='Close'
-              onClick={closeArticleModal}
+              onClick={closeModal}
             />
           </div>
           <div className='modal-body'>
@@ -317,7 +317,7 @@ function ArticleModal({closeArticleModal, getArticles, tempArticle, type}){
             </div>
           </div>
           <div className='modal-footer'>
-            <button type='button' className='btn btn-secondary' onClick={closeArticleModal}>
+            <button type='button' className='btn btn-secondary' onClick={closeModal}>
               關閉
             </button>
             <button type='button' className='btn btn-primary' onClick={submit}> 

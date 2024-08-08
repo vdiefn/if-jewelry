@@ -58,7 +58,7 @@ function Home() {
               <div className="row justify-content-center py-7">
                 <div className="col-md-6 text-center mt-3">
                   <h3>關於簡約</h3>
-                  <p className="my-5">「真正的優雅奠基於簡約之上。」</p>
+                  <h4 className="my-5">「真正的優雅奠基於簡約之上。」</h4>
                   <p><small>—Ms. Chanel—</small></p>
                 </div>
               </div>
