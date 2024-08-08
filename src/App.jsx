@@ -15,6 +15,7 @@ import Checkout from './pages/front/Checkout'
 import Success from './pages/front/Success'
 import Pay from './pages/front/Pay'
 import Articles from './pages/front/Articles'
+import ArticleDetail from './pages/front/ArticleDetail'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path='success/:orderId' element={<Success />}></Route>
           <Route path='pay/:orderId' element={<Pay />}></Route>
           <Route path='articles' element={<Articles />}></Route>
+          <Route path='article/:id' element={<ArticleDetail />}></Route>
         </Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path='/admin' element={<Dashboard />}>

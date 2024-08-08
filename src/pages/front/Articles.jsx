@@ -22,7 +22,7 @@ function Articles(){
         {
           articles.slice(0, 1).map((article) => {
             return (<div className="col-md-6 mt-md-2" key={article.id}>
-
+              <Link to={`/article/${article.id}`} className='text-decoration-none'>
               <div className="card border-0 mb-4 position-relative position-relative">
                 <img
                   src={article.image}
@@ -30,7 +30,7 @@ function Articles(){
                   alt="..."
                 />
                 <div className="card-body p-0">
-                  <h4 className="mb-0 mt-4">{article.title}</h4>
+                  <h4 className="mb-0 mt-4  ">{article.title}</h4>
                   <div className="d-flex justify-content-between mt-3">
                     <p className="card-text text-muted mb-0 w-75">
                       {article.content}
@@ -38,17 +38,17 @@ function Articles(){
                   </div>
                 </div>
               </div>
+              </Link>
             </div>
 
             )
           })
         }
-        <div className="col-md-6 d-flex flex-column justify-content-center mt-md-0 mt-3">
+        <div className="col-md-6 d-flex flex-column justify-content-center mt-md-0 mt-3" >
           <h2 className="fw-bold">時尚會變，唯獨風格歷久不衰。</h2>
           <h5 className="font-weight-normal text-muted mt-5 text-end">
-            - Coco Chanel -
+            —Ms. Chanel—
           </h5>
-
         </div>
       </div>
       <div className="row mt-3">
@@ -57,6 +57,7 @@ function Articles(){
         {
           articles.slice(1, 5).map((article) => {
             return (<div className="col-md-6 mt-md-4" key={article.id}>
+              <Link to={`/article/${article.id}`} className='text-decoration-none'>
               <div className="card border-0 mb-4 position-relative position-relative">
                 <img
                   src={article.image}
@@ -72,6 +73,7 @@ function Articles(){
                   </div>
                 </div>
               </div>
+              </Link>
             </div>
 
             )

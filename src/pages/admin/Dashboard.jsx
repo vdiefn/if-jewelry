@@ -85,8 +85,8 @@ function Dashboard(){
               訂單列表
             </Link>
             <Link className="list-group-item list-group-item-action py-3" to="/admin/articles">
-              <i className="bi bi-journal-bookmark-fill me-2"></i>
-              常見問題列表
+              <i className="bi bi-book-half me-2"></i>
+              文章列表
             </Link>
           </ul>
         </div>

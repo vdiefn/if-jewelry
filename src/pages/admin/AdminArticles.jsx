@@ -82,7 +82,7 @@ function AdminArticles(){
       id={tempArticle.id}
     />  
     <div className="p-3">
-    <h3>常見問題列表</h3>
+    <h3>文章列表</h3>
     <hr />
     <div className="text-end">
       <button
@@ -90,7 +90,7 @@ function AdminArticles(){
         className="btn btn-primary btn-sm"
         onClick={()=>openArticleModal('create',{})}
       >
-        建立新問答
+        建立新文章
       </button>
     </div>
     <table className="table">
