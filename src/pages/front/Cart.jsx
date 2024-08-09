@@ -66,18 +66,40 @@ function Cart() {
       <div className="row">
         <div className="col-md-8">
           <table className="table">
+            {
+              cartData?.carts?.length === 0 ?
+              (
+                <thead></thead>
+              )
+              :
             <thead>
               <tr>
+                (
                 <th scope="col" className="border-0 ps-0">產品資訊</th>
                 <th scope="col" className="border-0">數量</th>
                 <th scope="col" className="border-0">小計</th>
                 <th scope="col" className="border-0"></th>
+                )
               </tr>
             </thead>
+              
+            }
             <tbody>
               {
-                cartData?.carts?.map((item) => {
-                  return (<tr className="border-bottom border-top" key={item.id}>
+                cartData?.carts?.length === 0 ? (
+                  <>
+                    <div className='alert alert-light mt-5'>還沒有將你喜愛的飾品加入購物車喔！</div>
+                    <Link
+                      to='/products'
+                      className='btn btn-dark border-bottom border-top-0 border-start-0 border-end-0 rounded-0 mt-5'
+                    >
+                      回到產品列表
+                    </Link>
+                  </>
+                  ) :
+                  (
+                  cartData?.carts?.map((item) => {
+                    return (<tr className="border-bottom border-top" key={item.id}>
                     <th scope="row" className="border-0 px-0 font-weight-normal py-4">
                       <img src={item.product.imageUrl} alt="" className="object-cover" style={{ width: '72px', height: '72px', objectFit: 'cover' }} />
                       <p className="mb-0 fw-bold ms-3 d-inline-block">{item.product.title}</p>
@@ -118,60 +140,76 @@ function Cart() {
                   </tr>
 
                   )
-                })
+                }))
               }
             </tbody>
           </table>
-          <div className="input-group w-100 mb-3">
-            <input 
-              type="text" 
-              className="form-control rounded-0 border-bottom border-top-0 border-start-0 border-end-0 shadow-none" placeholder="優惠券號碼" 
-              aria-label="Recipient's username" 
-              aria-describedby="button-addon2"
-              onChange={handleChange}
-              value={couponData}
-            />
-            <button 
-              className="btn btn-dark border-bottom border-top-0 border-start-0 border-end-0 rounded-0" 
-              type="button" 
-              id="button-addon2" 
-              onClick={() => getCoupon()}>
-                加入優惠券
-            </button>
-
-              {/* <div className="input-group-append">
-              </div> */}
-          </div>
+          {
+              cartData?.carts?.length === 0 ? 
+              (
+                <div className="input-group w-100 mb-3"></div>
+              )
+              :
+              (
+                <div className="input-group w-100 mb-3">
+                  <input
+                    type="text"
+                    className="form-control rounded-0 border-bottom border-top-0 border-start-0 border-end-0 shadow-none" placeholder="優惠券號碼"
+                    aria-label="Recipient's username"
+                    aria-describedby="button-addon2"
+                    onChange={handleChange}
+                    value={couponData}
+                  />
+                  <button
+                    className="btn btn-dark border-bottom border-top-0 border-start-0 border-end-0 rounded-0"
+                    type="button"
+                    id="button-addon2"
+                    onClick={() => getCoupon()}>
+                    加入優惠券
+                  </button>
+                </div>
+              )
+          }
         </div>
-        <div className="col-md-4">
-          <div className="border p-4 mb-4">
-            <h4 className="fw-bold mb-4">訂單資訊</h4>
-            <table className="table text-muted border-bottom">
-              <tbody>
-                <tr>
-                  <th scope="row" className="border-0 px-0 pt-4 font-weight-normal">金額</th>
-                    <td className="text-end border-0 px-0 pt-4">NT${cartData?.final_total || ''}</td>
-                </tr>
-                <tr>
-                  <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">付款方式</th>
-                  <td className="text-end border-0 px-0 pt-0 pb-4">信用卡一次付清</td>
-                </tr>
-                <tr>
-                  <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">使用優惠券</th>
-                  <td className="text-end border-0 px-0 pt-0 pb-4">{couponData.length > 0? '是' : '否'}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div className="d-flex justify-content-between mt-4">
-              <p className="mb-0 h5 fw-bold">
-                {couponData.length>0? '折扣後金額':'總金額'}
-              </p>
-                <p className="mb-0 h5 fw-bold">NT${couponData.length === 0 ? cartData?.final_total: getCost?.data?.final_total}</p>
-              
+        {
+          cartData?.carts?.length === 0 ? 
+          (
+            <div className="col-md-4"></div>
+          )
+          :
+          (
+          <div className="col-md-4">
+            <div className="border p-4 mb-4">
+              <h4 className="fw-bold mb-4">訂單資訊</h4>
+                <table className="table text-muted border-bottom">
+                  <tbody>
+                    <tr>
+                      <th scope="row" className="border-0 px-0 pt-4 font-weight-normal">金額</th>
+                      <td className="text-end border-0 px-0 pt-4">NT${cartData?.final_total || ''}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">付款方式</th>
+                      <td className="text-end border-0 px-0 pt-0 pb-4">信用卡一次付清</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">使用優惠券</th>
+                      <td className="text-end border-0 px-0 pt-0 pb-4">{couponData.length > 0 ? '是' : '否'}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div className="d-flex justify-content-between mt-4">
+                  <p className="mb-0 h5 fw-bold">
+                      {couponData.length > 0 ? '折扣後金額' : '總金額'}
+                  </p>
+                  <p className="mb-0 h5 fw-bold">NT${couponData.length === 0 ? cartData?.final_total : getCost?.data?.final_total}</p>
+                </div>
+                <Link to='/checkout' className="btn btn-dark w-100 mt-4">進行結帳</Link>
             </div>
-            <Link to='/checkout' className="btn btn-dark w-100 mt-4">進行結帳</Link>
           </div>
-        </div>
+            
+          )
+        }
+        
       </div>
     </div>
   </div>

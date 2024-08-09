@@ -77,7 +77,7 @@ function FrontLayout() {
             <p className="mb-0">02-3456-7890</p>
             <p className="mb-0">service@mail.com</p>
           </div>
-          <p className="mb-0">© 2020 LOGO All Rights Reserved.</p>
+          <p className="mb-0">© 2024 LOGO All Rights Reserved.</p>
         </div>
       </div>
     </div>
