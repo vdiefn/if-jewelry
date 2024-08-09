@@ -39,7 +39,6 @@ function AdminArticles(){
   const openDeleteModal = (article) => {
     setTempArticle(article)
     deleteModal.current.show()
-  
   }
 
   const closeDeleteModal = () => {
@@ -68,12 +67,22 @@ function AdminArticles(){
     // setPagination(res.data.pagination)
   }
 
+  // const getArticle = async () => {
+  //   const id = tempArticle.id
+  //   console.log(tempArticle.id)
+  //   const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/article/${id}`)
+  //   console.log('這', res.data.article)
+  //   setTempArticle(res.data.article)
+  // }
+  
+
   return(<>
     <ArticleModal 
       closeModal={closeModal} 
       getArticles={getArticles} 
       tempArticle={tempArticle}
       type={type}
+
     />
     <DeleteModal 
       close={closeDeleteModal}
@@ -96,7 +105,6 @@ function AdminArticles(){
     <table className="table">
       <thead>
         <tr>
-          <th scope="col">標籤</th>
           <th scope="col">建立日期</th>
           <th scope="col">標題</th>
           <th scope="col">作者</th>
@@ -108,7 +116,6 @@ function AdminArticles(){
         {articles.map((article) => {
           return (
             <tr key={article.id}>
-              <td>{article.tag}</td>
               <td>{new Date(article.create_at).toDateString()}</td>
               <td>{article.title}</td>
               <td>{article.author}</td>

@@ -2,11 +2,14 @@ import { useContext, useEffect, useState} from "react"
 
 import axios from "axios"
 
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../store/messageStore"
+
 function OrderModal({ closeOrderModal, getOrders, tempOrder }){
   const [tempData, setTempData] = useState({
     ...tempOrder,
     is_paid: '',
   })
+  const [message, dispatch] = useContext(MessageContext)
 
   useEffect(() => {
     setTempData({
@@ -31,12 +34,12 @@ function OrderModal({ closeOrderModal, getOrders, tempOrder }){
           ...tempData
         }
       })
-      // handleSuccessMessage(dispatch, res)
+      handleSuccessMessage(dispatch, res)
       closeOrderModal()
       getOrders()
     } catch (error) {
       console.log(error)
-      // handleErrorMessage(dispatch, error)
+      handleErrorMessage(dispatch, error)
     }
   }
 

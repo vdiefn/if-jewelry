@@ -29,7 +29,7 @@ function ArticleDetail(){
     </div>
     <div className="row my-5">
         <div className="col-md-12 pre-wrap">
-        <p>{article.description}</p>
+          <p>{article.description}</p>
       </div>
 
     </div>

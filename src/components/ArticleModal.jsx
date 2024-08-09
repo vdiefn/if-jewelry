@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
 import axios from 'axios'
 
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../store/messageStore"
 
-function ArticleModal({closeModal, getArticles, tempArticle, type}){
+
+function ArticleModal({ closeModal, getArticles, tempArticle, type }){
   const [date, setDate] = useState(new Date())
+  const [message, dispatch] = useContext(MessageContext)
 
   const [tempData, setTempData] = useState({
       title: "",
@@ -34,29 +37,25 @@ function ArticleModal({closeModal, getArticles, tempArticle, type}){
     } else if(type === 'edit') {
       setTempData(tempArticle)
       setDate(new Date(tempArticle.create_at))
+      
     }
-  }, [type, tempArticle])
+  }, [type, tempArticle ])
+
 
   const handleChange = (e) => {
     const { value, name } = e.target
-    
-    if(name === 'isPublic'){
+    if (name === 'isPublic') {
       setTempData((pre) => ({ ...pre, [name]: e.target.checked }))
-    } else if (['knowledge', 'maintainance', 'purchase', 'return', 'other'].includes(name)){
-      console.log(e.target.value)
-      setTempData((pre) => ({ ...pre, tag: tempData.tag.push(e.target.name)}))
-      
     } else {
       setTempData((pre) => ({ ...pre, [name]: value }))
     }
   }
-  
+
   
   const submit = async() => {
     try {
       let api = `/v2/api/${import.meta.env.VITE_API_PATH}/admin/article`
       let method = 'post'
-      console.log(type)
       if(type === 'edit'){
         api = `/v2/api/${import.meta.env.VITE_API_PATH}/admin/article/${tempArticle.id}`
         method='put'
@@ -66,13 +65,14 @@ function ArticleModal({closeModal, getArticles, tempArticle, type}){
         {
           data: {
             ...tempData,
-            create_at: date.getTime()//轉換成unix timeStamp
+            create_at: date.getTime(),//轉換成unix timeStamp
+            content:'1'
           }
-         
         }
       )
-
+      handleSuccessMessage(dispatch, res)
     } catch(error) {
+      handleErrorMessage(dispatch, error)
       console.log(error)
     }
 
@@ -212,7 +212,8 @@ function ArticleModal({closeModal, getArticles, tempArticle, type}){
                 </div>
 
                 <div className='col-sm-12'>
-                  <div className='form-group mb-2'>
+
+                  <div className='form-group mb-2' style={{display: 'none'}}>
                     <label className='w-100' htmlFor='content'>
                       次標題
                       <input
@@ -221,73 +222,27 @@ function ArticleModal({closeModal, getArticles, tempArticle, type}){
                         name='content'
                         placeholder=''
                         className='form-control'
-                        onChange={handleChange}
-                        value={tempData.content || ''}
+                        // onChange={handleChange}
+                        // value={tempData.content || '4'}
+                        defaultValue='content'
                       />
                     </label>
                   </div>
 
-                  <div className='row'>
-                    <div className='form-group mb-2 col-md-12'>
-                      分類
-                      <div className="multiSelect">
-                        <div className="selectBtn" data-title="多選選單，請選擇"></div>
-                        <div className="optionGroup" >
-                          <label><input
-                            className='me-1'
-                            id='knowledge'
-                            name='knowledge'
-                            type="checkbox"
-                            onChange={handleChange}
-                            value='knowledge'
-                          />知識</label>
-                          <label><input
-                            className='ms-2 me-1'
-                            name='maintainance'
-                            value='maintainance'
-                            type="checkbox"
-                            onChange={handleChange}
-                          />保養</label>
-                          <label><input
-                            className='ms-2 me-1'
-                            name='purchase'
-                            value='purchase'
-                            type="checkbox"
-                            onChange={handleChange}
-                          />購買注意事項</label>
-                          <label><input
-                            className='ms-2 me-1'
-                            name='return'
-                            value='return'
-                            type="checkbox"
-                            onChange={handleChange}
-                          />退貨注意事項</label>
-                          <label><input
-                            className='ms-2 me-1'
-                            name='other'
-                            type="checkbox"
-                            onChange={handleChange}
-                          />其他</label>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                 <div className='form-group mb-2'>
-                  <label className='w-100' htmlFor='description'>
-                    文章內容
-                    <textarea
-                      type='text'
-                      id='description'
-                      name='description'
-                      placeholder=''
-                      className='form-control'
-                      cols='40'
-                      rows='15'
-                      onChange={handleChange}
-                      value={tempData.description || ''}
-                    />
+                    <label className='w-100' htmlFor='description'>
+                      文章內容
+                      <textarea
+                        type='text'
+                        id='description'
+                        name='description'
+                        placeholder=''
+                        className='form-control'
+                        cols='40'
+                        rows='15'
+                        onChange={handleChange}
+                        value={tempData.description || ''}
+                      />
                   </label>
                 </div>
                 

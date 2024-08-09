@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import { useState, useEffect, useContext } from 'react'
 import axios from "axios"
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../store/messageStore"
 
 function CouponModal({ closeModal, getCoupons, type, tempCoupon }) {
   const [tempData, setTempData] = useState({
@@ -9,6 +10,8 @@ function CouponModal({ closeModal, getCoupons, type, tempCoupon }) {
     due_date: 1555459200,
     code: 'testCode'
   })
+
+  const [message, dispatch] = useContext(MessageContext)
 
   const [date, setDate] = useState(new Date())
 
@@ -68,8 +71,10 @@ function CouponModal({ closeModal, getCoupons, type, tempCoupon }) {
       )
       closeModal() 
       getCoupons()
+      handleSuccessMessage(dispatch, res)
       
     } catch (error) {
+      handleErrorMessage(dispatch, error)
       console.log(error)
     } 
   }
@@ -143,7 +148,7 @@ function CouponModal({ closeModal, getCoupons, type, tempCoupon }) {
                       .getDate()
                       .toString()
                       .padStart(2, 0)}`}
-                      
+
                     onChange={(e)=>{
                       setDate(new Date(e.target.value))
                     }}
