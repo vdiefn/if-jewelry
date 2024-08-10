@@ -28,7 +28,6 @@ function AdminProducts(){
 
   const getProducts = async(page=1) => {
     const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/products?page=${page}`)
-    console.log(productRes)
     setProducts(productRes.data.products)
     setPagination(productRes.data.pagination)
   }
@@ -130,8 +129,10 @@ function AdminProducts(){
         
       </tbody>
     </table>
+    <div className='d-flex justify-content-center mt-5'>
+      <Pagination pagination={pagination} changePage={getProducts} />
+    </div>
     
-    <Pagination pagination={pagination} changePage={getProducts}/>
     
   </div>
     

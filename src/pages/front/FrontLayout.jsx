@@ -2,11 +2,14 @@ import { Outlet, useLocation, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Navbar from "../../components/Navbar"
+import Loading from '../../components/Loading'
 
 function FrontLayout() {
   const location = useLocation() //確認目前路由
   const { orderId } = useParams()
   const [ cartData, setCartData ] = useState({})
+  const [products, setProducts] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const getCart = async() => {
     try {
@@ -22,11 +25,18 @@ function FrontLayout() {
       const res = await axios.get(
         `/v2/api/${import.meta.env.VITE_API_PATH}/order/${orderId}`,
       )
-      console.log('結帳資訊', res)
       setCartData(res.data.data)
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const getProducts = async (page = 1) => {
+    setIsLoading(true)
+    const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/products?page=${page}`)
+    setProducts(productRes.data.products)
+    // setPagination(productRes.data.pagination)
+    setIsLoading(false)
   }
   
   useEffect(() => {
@@ -59,7 +69,7 @@ function FrontLayout() {
     
   
     
-    <Outlet context={{ getCart, cartData }}></Outlet>
+    <Outlet context={{ getCart, cartData, getProducts, products  }}></Outlet>
     <div className="bg-light py-4 mt-5">
     </div>
     <div className="bg-dark py-5">
@@ -77,7 +87,7 @@ function FrontLayout() {
             <p className="mb-0">02-3456-7890</p>
             <p className="mb-0">service@mail.com</p>
           </div>
-          <p className="mb-0">© 2024 LOGO All Rights Reserved.</p>
+          <p className="mb-0">© 2024 If Jewelry All Rights Reserved.</p>
         </div>
       </div>
     </div>

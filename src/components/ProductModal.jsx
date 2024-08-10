@@ -34,7 +34,6 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
       })
     } else if(type ==='edit') {
       setTempData(tempProduct)
-      console.log('tempProduct:',tempProduct)
     }
   }, [type, tempProduct])
 

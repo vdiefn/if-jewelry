@@ -58,3 +58,10 @@ input[type=number] {
   word-wrap: break-word;
 }
 
+.img-hover {
+  transition: all .5s ease-out;
+}
+
+.img-hover:hover {
+  transform: scale(1.02) translate(0, -8px);
+}

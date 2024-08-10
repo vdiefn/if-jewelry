@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
+import Loading from '../../components/Loading'
 
 import axios from 'axios'
 
-
 function Home() {
+
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
   const getProducts = async () => {
     setIsLoading(true)
     const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/products`)
-    console.log('Home:',productRes)
     setProducts(productRes.data.products)
     setIsLoading(false)
   }
@@ -21,35 +21,38 @@ function Home() {
 
   }, [])
     
-  return(<>
-    <div className="container">
-      <div className="row mb-2">
+  return (<div className="container">
+    <Loading isLoading={isLoading} />
+    <div className="row mb-2  ">
       {
-          products?.slice(0, 3).map((product) => {
-          return(<>
-            <div className="col-md-4 mt-md-4" key={product.key}>
+        products?.slice(0, 3).map((product) => {
+          return (<div className="col-md-4 mt-md-4" key={product.id}>
+            <Link to={`/product/${product.id}`} className='text-decoration-none'>
               <div className="card border-0 mb-4" >
-                <Link to={`/product/${product.id}`} className='text-decoration-none'>
+
                 <img
                   src={product.imageUrl}
-                  className="card-img-top rounded-0 object-fit img-height"
+                  className="card-img-top rounded-0 object-fit img-height img-hover"
                   alt="..."
                 />
                 <div className="card-body text-center">
-                    <h4 >{product.title}</h4>
+                  <h4 >{product.title}</h4>
                   <div className="d-flex justify-content-between">
                     <p className="card-text text-muted mb-0">
                     </p>
                   </div>
                 </div>
-                </Link >
+
               </div>
-            </div>
-          </>)
-          })
+            </Link >
+          </div> 
+
+          )
+        })
       }
-      </div>
-    </div>
+    </div>  
+
+     
     <div className="bg-light mt-5">
       <div className="container">
         <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
@@ -89,10 +92,10 @@ function Home() {
       <div className="row">
         {
           products?.slice(3, 4).map((product) => {
-            return (<>
+            return (<div className="row justify-content-between mt-4" key={product.id}>
               <div className="col-md-6">
                 <Link to={`/product/${product.id}`}>
-                <img src={product.imageUrl} alt="" className="img-fluid" />
+                  <img src={product.imageUrl} alt="" className="img-fluid" />
                 </Link>
               </div>
               <div className="col-md-4 m-auto text-center">
@@ -101,18 +104,16 @@ function Home() {
                   <p className="text-muted">{product.content}</p>
                 </Link>
               </div>
-            </>)
-          })
+            </div>)
+          }) 
         }
-        
-      </div>
-      <div className="row flex-row-reverse justify-content-between mt-4">
+
         {
           products?.slice(4, 5).map((product) => {
-            return (<>
+            return (<div className="row flex-row-reverse justify-content-between mt-4" key={product.id}>
               <div className="col-md-6">
                 <Link to={`/product/${product.id}`} >
-                <img src={product.imageUrl} alt="" className="img-fluid" />
+                  <img src={product.imageUrl} alt="" className="img-fluid" />
                 </Link>
               </div>
               <div className="col-md-4 m-auto text-center">
@@ -121,16 +122,13 @@ function Home() {
                   <p className="text-muted ">{product.content}</p>
                 </Link>
               </div>
-            </>)
+            </div>)
           })
         }
-
       </div>
     </div>
-    
-  
-  </>
-  )
-}
+
+  </div>  
+)}
 
 export default Home

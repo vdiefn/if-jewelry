@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Link } from "react-router-dom"
+import { Link, useOutletContext } from "react-router-dom"
 
 import axios from 'axios'
 
@@ -13,6 +13,8 @@ function Products(){
   const [request, setRequest] = useState('')
 
 
+
+
   const filterProducts = useMemo(() => {
     return products.filter((item) => item.category.match(request))
   }, [request])
@@ -20,14 +22,15 @@ function Products(){
   const getProducts = async (page = 1) => {
     setIsLoading(true)
     const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/products?page=${page}`)
-    console.log(productRes)
     setProducts(productRes.data.products)
     setPagination(productRes.data.pagination)
     setIsLoading(false)
   }
 
   useEffect(() => {
+ 
     getProducts()
+
   },[])
 
   const handleChange = (e) => {
@@ -63,11 +66,11 @@ function Products(){
                 return (<div className="col-md-6" key={product.id}>
                   <div className="card border-0 mb-4 position-relative position-relative">
                     <Link to={`/product/${product.id}`} className="text-dark">
-                      <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height" alt="..." />
+                      <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height img-hover" alt="..." />
                     </Link>
                     <div className="card-body p-0">
                       <h4 className="mb-0 mt-1"><Link to={`/product/${product.id}`} className="text-decoration-none">{product.title}</Link></h4>
-                      <p className="card-text mb-0">NT${product.price} <span className="text-muted "><del>NT${product.origin_price}</del></span></p>
+                      <span className="card-text mb-0">NT${product.price} <span className="text-muted "></span></span>
                       <p className="text-muted mt-3"></p>
                     </div>
                   </div>

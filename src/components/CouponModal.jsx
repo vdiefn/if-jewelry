@@ -149,6 +149,7 @@ function CouponModal({ closeModal, getCoupons, type, tempCoupon }) {
                       .toString()
                       .padStart(2, 0)}`}
 
+
                     onChange={(e)=>{
                       setDate(new Date(e.target.value))
                     }}

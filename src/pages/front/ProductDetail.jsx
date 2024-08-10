@@ -14,7 +14,6 @@ function ProductDetail() {
     const productRes = await axios.get(
       `/v2/api/${import.meta.env.VITE_API_PATH}/product/${id}`,
     );
-    console.log(productRes);
     setProduct(productRes.data.product)
   };
 
@@ -52,21 +51,7 @@ function ProductDetail() {
             <div className="carousel-item active">
               <img src={product.imageUrl} className="d-block w-100" alt="..." />
             </div>
-            <div className="carousel-item">
-              <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" className="d-block w-100" alt="..." />
-            </div>
-            <div className="carousel-item">
-              <img src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1916&q=80" className="d-block w-100" alt="..." />
-            </div>
           </div>
-          <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="sr-only">Previous</span>
-          </a>
-          <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="sr-only">Next</span>
-          </a>
         </div>
       </div>
         <div className="col-md-5">
@@ -77,8 +62,7 @@ function ProductDetail() {
             </ol>
           </nav>
           <h2 className="fw-bold h1 mb-1">{product.title}</h2>
-          <p className="mb-0 text-muted text-end"><del>NT${product.price}</del></p>
-          <p className="h4 fw-bold text-end">NT${product.origin_price}</p>
+          <p className="h4 fw-bold text-end">NT${product.price}</p>
           <div className="row align-items-center">
             <div className="col-6">
               <div className="input-group my-3 bg-light rounded">

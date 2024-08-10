@@ -28,7 +28,6 @@ function AdminCoupons(){
 
   const getCoupons = async(page=1) => {
     const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/coupons?page=${page}`)
-    console.log(res)
     setCoupons(res.data.coupons)
     setPagination(res.data.pagination)
   }
@@ -107,7 +106,8 @@ function AdminCoupons(){
             <tr key={product.title}>
               <td>{product.title}</td>
               <td>{product.percent}</td>
-              <td>{new Date(product.due_date).toDateString()}</td>
+              {/* <td>{new Date(product.due_date).toDateString()}</td> */}
+              <td>{new Date(product.due_date).toISOString().split('T')[0]}</td>
               <td>{product.code}</td>
               <td>{product.is_enabled ? '啟用' : '未啟用'}</td>
               <td>
@@ -133,7 +133,9 @@ function AdminCoupons(){
       </tbody>
     </table>
     
-    <Pagination pagination={pagination} changePage={getCoupons}/>
+    <div className='d-flex justify-content-center mt-5'>
+      <Pagination pagination={pagination} changePage={getCoupons} />
+    </div>
     
   </div>
     

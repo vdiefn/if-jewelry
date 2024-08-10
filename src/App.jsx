@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 
 import Login from './pages/Login'
+import NotFound from './pages/NotFound'
 import Dashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/AdminProducts'
 import AdminCoupons from './pages/admin/AdminCoupons'
@@ -16,6 +17,7 @@ import Success from './pages/front/Success'
 import Pay from './pages/front/Pay'
 import Articles from './pages/front/Articles'
 import ArticleDetail from './pages/front/ArticleDetail'
+
 
 
 function App() {
@@ -41,6 +43,7 @@ function App() {
           <Route path='orders' element={<AdminOrders />}></Route>
           <Route path='articles' element={<AdminArticles />}></Route>
         </Route>
+        <Route path='*' element={<NotFound />} />
       </Routes>
 
     </div>

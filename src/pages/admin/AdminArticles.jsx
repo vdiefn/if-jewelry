@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import ArticleModal from "../../components/ArticleModal";
 import DeleteModal from "../../components/DeleteModal";
+import Pagination from "../../components/Pagination";
 
 
 function AdminArticles(){
@@ -62,18 +63,11 @@ function AdminArticles(){
 
   const getArticles = async(page=1) =>{
     const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/articles`)
-    console.log(res)
     setArticles(res.data.articles)
-    // setPagination(res.data.pagination)
+    setPagination(res.data.pagination)
   }
 
-  // const getArticle = async () => {
-  //   const id = tempArticle.id
-  //   console.log(tempArticle.id)
-  //   const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/article/${id}`)
-  //   console.log('這', res.data.article)
-  //   setTempArticle(res.data.article)
-  // }
+
   
 
   return(<>
@@ -116,7 +110,7 @@ function AdminArticles(){
         {articles.map((article) => {
           return (
             <tr key={article.id}>
-              <td>{new Date(article.create_at).toDateString()}</td>
+              <td>{new Date(article.create_at).toISOString().split('T')[0]}</td>
               <td>{article.title}</td>
               <td>{article.author}</td>
               <td>{article.isPublic ? '公開' : '隱藏'}</td>
@@ -142,6 +136,11 @@ function AdminArticles(){
 
       </tbody>
     </table>
+
+    <div className='d-flex justify-content-center mt-5'>
+      <Pagination pagination={pagination} changePage={getArticles} />
+    </div>    
+    
   </div>
   </>)
 

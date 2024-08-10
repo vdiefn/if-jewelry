@@ -28,7 +28,6 @@ function AdminOrders(){
 
   const getOrders = async (page=1) => {
     const orderRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/orders?page=${page}`)
-    console.log(orderRes)
     setOrders(orderRes.data.orders)
     setPagination(orderRes.data.pagination)
   }
@@ -124,7 +123,7 @@ function AdminOrders(){
       </tbody>
     </table>
 
-    <nav aria-label='Page navigation example'>
+    <nav aria-label='Page navigation example' className='d-flex justify-content-center mt-5'>
       <Pagination pagination={pagination} changePage={getOrders}/>
     </nav>
 
