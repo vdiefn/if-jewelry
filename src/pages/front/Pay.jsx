@@ -1,12 +1,11 @@
 import { Link, useNavigate, useOutletContext, useParams} from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
-import { Input, Select } from '../../components/FormElements'
+import { Input, Select, CheckboxRadio } from '../../components/FormElements'
 import axios from 'axios'
 
 function Pay() {
   const { cartData } = useOutletContext()
-  console.log(cartData)
   const navigate = useNavigate()
   const { orderId } = useParams()
   const {
@@ -19,7 +18,6 @@ function Pay() {
 
   const onSubmit = async() => {
     const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/pay/${orderId}`)
-    console.log(res)
     navigate(`/success/${orderId}`)
   }
   return(<>
@@ -75,17 +73,95 @@ function Pay() {
             </div>
             <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div className="card-body bg-light ps-5 py-4">
-                <div className="mb-2">
-                    <label htmlFor="Lorem ipsum1" className="text-muted mb-0 shadow-none">信用卡卡號</label>
-                    <input type="text" className="form-control" id="Lorem ipsum1" placeholder="請輸入卡號" />
+                <div className="mb-4">
+                    <Input
+                      id='creditCard'
+                      labelText='信用卡卡號'
+                      errors={errors}
+                      register={register}
+                      type='number'
+                      rules={{
+                        required: '信用卡卡號為必填',
+                        minLength: {
+                          value: 16,
+                          message: '信用卡卡號長度為16碼',
+                        },
+                        maxLength: {
+                          value: 16,
+                          message: '信用卡卡號長度為16碼',
+                        }, 
+                      }}
+                    ></Input>
+    
                 </div>
-                <div className="mb-2">
-                    <label htmlFor="Lorem ipsum1" className="text-muted mb-0">有效日期</label>
-                    <input type="text" className="form-control" id="Lorem ipsum1" placeholder="MM/YY" />
+                  <div className='row rol-cols-2'>
+                    <h6>信用卡有效期限</h6>
+                    <div className="col-6 mb-4">
+                    <Select
+                      id='month'
+                      labelText=''
+                      errors={errors}
+                      register={register}
+                      rules={{
+                        required: '信用卡到期月份為必填',
+                      }}
+                    >
+                      <option value=''>請選擇月份</option>
+                      <option value='1' >01</option>
+                      <option value='2' >02</option>
+                      <option value='3' >03</option>
+                      <option value='4' >04</option>
+                      <option value='5' >05</option>
+                      <option value='6' >06</option>
+                      <option value='7' >07</option>
+                      <option value='8' >08</option>
+                      <option value='9' >09</option>
+                      <option value='10' >10</option>
+                      <option value='11' >11</option>
+                      <option value='12' >12</option>                      
+                    </Select>
+                    </div>
+                    <div className="col-6 mb-2">  
+                      <Select
+                        id='year'
+                        labelText=''
+                        errors={errors}
+                        register={register}
+                        rules={{
+                          required: '信用卡到期年份為必填'
+                        }}
+                      >
+                        <option value=''>請選擇年份</option>
+                        {
+                          [...(new Array(14))].map((i, num) => {
+                            return (
+                              <option value={num + 17} key={num}>{num + 17}</option>
+                            )
+                          })
+                        }
+
+                      </Select>
+                    </div>    
                 </div>
                 <div className="mb-0">
-                    <label htmlFor="Lorem ipsum2" className="text-muted mb-0">安全碼</label>
-                    <input type="text" className="form-control" id="Lorem ipsum2" placeholder="CVC" />
+                    <Input
+                      id='CVC'
+                      labelText='安全碼'
+                      errors={errors}
+                      type='number'
+                      register={register}
+                      rules={{
+                        required: '安全碼為必填',
+                        minLength: {
+                          value: 3,
+                          message: '請輸入卡片背後安全碼，共3碼',
+                        },
+                        maxLength: {
+                          value: 3,
+                          message: '請輸入卡片背後安全碼，共3碼',
+                        },
+                      }}
+                    ></Input>
                 </div>
               </div>
             </div>
@@ -96,19 +172,38 @@ function Pay() {
             </div>
             <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
               <div className="form-check card-body bg-light ps-5 py-4">
-                 <div className='mb-2'>
-                    <input type="radio" className="form-check-input me-3 radio-color" name='receipt' id="Lorem ipsum1" placeholder="Lorem ipsum" />
-                    <label htmlFor="Lorem ipsum1" className="form-check-label mb-0 ">紙本發票</label>
-                 </div>
-                <div className='mb-2'>
-                  <input type="radio" className="form-check-input me-3" name='receipt' id="Lorem ipsum2" placeholder="Lorem ipsum" />
-                  <label htmlFor="Lorem ipsum2" className="form-check-label mb-0">公司發票</label>
+                    <CheckboxRadio
+                      type='radio'
+                      name='isVegetarian'
+                      id='vegetarian'
+                      value={true}
+                      register={register}
+                      errors={errors}
+                      rules={{ required: '請選擇發票提供方式' }}
+                    labelText="紙本發票"
+                    ></CheckboxRadio>
+                  <CheckboxRadio
+                    type='radio'
+                    name='isVegetarian'
+                    id='vegetarian'
+                    value={true}
+                    register={register}
+                    errors={errors}
+                    rules={{ required: '請選擇發票提供方式' }}
+                    labelText="公司發票"
+                  ></CheckboxRadio>
+                    <CheckboxRadio
+                      type='radio'
+                      name='isVegetarian'
+                      id='non-vegetaria'
+                      value={false}
+                      register={register}
+                      errors={errors}
+                    rules={{ required: '請選擇發票提供方式' }}
+                    labelText="捐贈發票"
+                    ></CheckboxRadio>
+                  
                 </div>
-                <div className='mb-2'>
-                  <input type="radio" className="form-check-input me-3" name='receipt' id="Lorem ipsum3" placeholder="Lorem ipsum" />
-                  <label htmlFor="Lorem ipsum3" className="form-check-label mb-0">捐贈發票</label>  
-                </div>
-              </div>
             </div>
           </div>
         </div>

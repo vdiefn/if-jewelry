@@ -1,18 +1,19 @@
 import { useOutletContext, Link } from 'react-router-dom'
 import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore"
 
 function Cart() {
   const { cartData, getCart } = useOutletContext()
   const [couponData, setCouponData] = useState('')
   const [getCost, setGetCost] =  useState({})
   const [loadingItems, setLoadingItem ] = useState([])
+  const [message, dispatch] = useContext(MessageContext)
 
   const removeCartItem = async(id) => {
     try {
       const res = await axios.delete(`/v2/api/${import.meta.env.VITE_API_PATH}/cart/${id}`)
       getCart()
-      console.log(res)
     } catch(error){
       console.log(error)
     }
@@ -43,11 +44,11 @@ function Cart() {
     }}
     try{
       const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/coupon`, data)
-      console.log(res.data)
       setGetCost(res.data)
-      console.log(getCost)
+      handleSuccessMessage(dispatch, res)
     } catch(error){
       console.log(error)
+      handleErrorMessage(dispatch, error)
     }
   }
 

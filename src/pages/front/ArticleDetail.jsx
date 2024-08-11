@@ -13,15 +13,14 @@ function ArticleDetail(){
   const navigate = useNavigate()
 
   const getArticle = async() => {
+    setIsLoading(true)
     const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/article/${id}`)
     setArticle(res.data.article)
-    
+    setIsLoading(false)
   }
 
   useEffect(() => {
-    setIsLoading(true)
     getArticle(id)
-    setIsLoading(false)
   }, [id])
 
 

@@ -6,8 +6,6 @@ import { Input, TextArea } from '../../components/FormElements'
 
 function Checkout(){
   const { cartData } = useOutletContext()
-  console.log('checkout:',cartData)
-
   
   const navigate = useNavigate()
   const {
@@ -27,13 +25,12 @@ function Checkout(){
           name,
           email,
           tel,
-          address
-        }
-      },
-      message: data.message
+          address,
+        },
+        message: data.message
+      }
     }
     const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/order`, form)
-    console.log(res)
     navigate(`/pay/${res.data.orderId}`)
   }
 

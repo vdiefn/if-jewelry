@@ -26,6 +26,8 @@ function AdminArticles(){
     getArticles()
   }, [])
 
+  
+
   const openArticleModal = (type, article) => {
     setTempArticle(article)
     setType(type)

@@ -1,20 +1,26 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useParams, useOutletContext, Link } from 'react-router-dom'
 import axios from 'axios'
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore"
+import Loading from '../../components/Loading'
 
 function ProductDetail() {
   const [product, setProduct] = useState({});
   const [cartQuantity, setCartQuantity ] = useState(1)
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false)
+  const [pause, setPause] = useState(false)
   const { getCart } = useOutletContext();
-  
+  const [message, dispatch] = useContext(MessageContext)
 
   const getProduct = async (id) => {
+    setIsLoading(true)
     const productRes = await axios.get(
       `/v2/api/${import.meta.env.VITE_API_PATH}/product/${id}`,
     );
+    
     setProduct(productRes.data.product)
+    setIsLoading(false)
   };
 
   const addToCart = async() => {
@@ -24,32 +30,35 @@ function ProductDetail() {
         qty: cartQuantity
       }
     }
-    setIsLoading(true)
+    setPause(true)
     try {
       const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/cart`, data)
-      console.log(res)
       getCart();
-      setIsLoading(false)
-      
+      setPause(false)
+      handleSuccessMessage(dispatch, res)
+
     } catch (error) {
       console.log(error)
-      setIsLoading(false)
+      setPause(false)
+      handleErrorMessage(dispatch, error)
     }
     
   }
 
   useEffect(() => {
     getProduct(id);
+    
   }, [id]);
 
   return(<>
     <div className="container mt-5">
+    <Loading isLoading={isLoading} />
     <div className="row align-items-center">
       <div className="col-md-7">
         <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src={product.imageUrl} className="d-block w-100" alt="..." />
+                <img src={product.imageUrl} className="d-block w-100 product-img-height object-fit" alt="..." />
             </div>
           </div>
         </div>
@@ -92,7 +101,7 @@ function ProductDetail() {
                 href="./checkout.html" 
                 className="text-nowrap btn btn-dark w-100 py-2" 
                 onClick={()=>addToCart()}
-                disabled={isLoading}
+                disabled={pause}
               >
                 加入購物車
               </button>
@@ -101,7 +110,7 @@ function ProductDetail() {
         </div>
     </div>
     <div className="row my-5">
-        <div className="col-md-4 text-muted ">
+        <div className="col-md-4 text-muted pre-wrap">
           <p>{product.description}</p>
       </div>
       <div className="col-md-8">

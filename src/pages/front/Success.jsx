@@ -4,14 +4,12 @@ import axios from 'axios'
 
 function Success() {
   const { orderId } = useParams()
-  console.log('success:', orderId)
   const [ orderData, setOrderData ] = useState({})
+
   const getCart = async(orderId) => {
     const res = await axios.get(
       `/v2/api/${import.meta.env.VITE_API_PATH}/order/${orderId}`,
     )
-
-    console.log('success:', res)
     setOrderData(res.data.order)
   }
 
@@ -25,8 +23,10 @@ function Success() {
         <div className="row my-auto pb-7">
           <div className="col-md-5 d-flex flex-column">
             <div className="my-auto">
-              <h2>購買成功</h2>
-              <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod</p>
+              <div className='mb-3'><h2> 購買成功</h2></div>
+
+              <p>感謝您對&nbsp;「如果·If Jwewlry」&nbsp;的支持！希望您會喜歡收到的商品😊</p>
+              <p>如有任何問題，請不吝隨時與我們聯繫，期待您的再次光臨！</p>
 
               <div className='col-md-12'>
                 <div className='card rounded-0 py-4'>

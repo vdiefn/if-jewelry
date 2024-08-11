@@ -9,6 +9,7 @@ function OrderModal({ closeOrderModal, getOrders, tempOrder }){
     ...tempOrder,
     is_paid: '',
   })
+
   const [message, dispatch] = useContext(MessageContext)
 
   useEffect(() => {
@@ -73,6 +74,7 @@ function OrderModal({ closeOrderModal, getOrders, tempOrder }){
                   className='form-control mt-1'
                   value={tempOrder?.user?.name || ''}
                   onChange={handleChange}
+                  disabled
                 />
               </label>
             </div> 
@@ -87,6 +89,7 @@ function OrderModal({ closeOrderModal, getOrders, tempOrder }){
                   className='form-control mt-1'
                     value={tempOrder?.user?.email || ''}
                   onChange={handleChange}
+                  disabled
                 />
               </label>
             </div>
@@ -102,6 +105,7 @@ function OrderModal({ closeOrderModal, getOrders, tempOrder }){
                   className='form-control mt-1'
                     value={tempOrder?.user?.address || ''}
                   onChange={handleChange}
+                  disabled
                 />
               </label>
             </div>
@@ -116,9 +120,27 @@ function OrderModal({ closeOrderModal, getOrders, tempOrder }){
                     className='form-control mt-1'
                     value={tempOrder?.user?.tel || ''}
                     onChange={handleChange}
+                    disabled
                   />
                 </label>
             </div> 
+              <div className='form-group mb-3 col-md-8'>
+                <label className='w-100' htmlFor='message'>
+                  留言
+                  <textarea
+                    type='text'
+                    id='message'
+                    name='message'
+                    placeholder=''
+                    cols='6'
+                    rows='3'
+                    className='form-control mt-1'
+                    value={tempOrder?.message || ''}
+                    onChange={handleChange}
+                    disabled
+                  />
+                </label>
+              </div> 
           </div> 
             <div className='row'>
 

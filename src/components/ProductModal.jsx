@@ -71,7 +71,6 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
           data: tempData
         }
       )
-      console.log('res', res)
       handleSuccessMessage(dispatch, res)
       closeProductModal() 
       getProducts()
@@ -83,8 +82,6 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
   }
 
   const uploadFile = async (file) => {
-    
-    console.log(file);
     if (!file) {
       return
     }
@@ -92,7 +89,6 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     formData.append('file-to-upload', file)
     try {
       const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/upload`, formData)
-      console.log(res)
       setTempData({
         ...tempData,
         imageUrl: res.data.imageUrl
@@ -240,6 +236,8 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                     className='form-control'
                     onChange={handleChange}
                     value={tempData.description}
+                    cols='5'
+                    rows='5'
                   />
                 </label>
               </div>
@@ -254,6 +252,8 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                     className='form-control'
                     onChange={handleChange}
                     value={tempData.content}
+                    cols='20'
+                    rows='10'
                   />
                 </label>
               </div>

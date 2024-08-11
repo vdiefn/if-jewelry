@@ -59,20 +59,24 @@ function Products(){
           </div>
         </div>
     
-        <div className="col-md-8 ms-4">
+        <div className="col-md-9 ms-4">
           <div className="row">
             { request.length === 0 ? 
               (products.map((product) => {
                 return (<div className="col-md-6" key={product.id}>
                   <div className="card border-0 mb-4 position-relative position-relative">
-                    <Link to={`/product/${product.id}`} className="text-dark">
+                    <Link to={`/product/${product.id}`} className="text-dark text-decoration-none">
                       <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height img-hover" alt="..." />
+
+                      <div className="card-body p-0 d-flex justify-content-center">
+                        <p className="card-text fs-6 fw-bold mt-2">
+                          {product.title}&emsp;&emsp;
+                          <span className="fs-6 fw-normal">
+                            NT${product.price}
+                          </span>
+                        </p>
+                      </div>
                     </Link>
-                    <div className="card-body p-0">
-                      <h4 className="mb-0 mt-1"><Link to={`/product/${product.id}`} className="text-decoration-none">{product.title}</Link></h4>
-                      <span className="card-text mb-0">NT${product.price} <span className="text-muted "></span></span>
-                      <p className="text-muted mt-3"></p>
-                    </div>
                   </div>
                 </div>
                 )
@@ -81,15 +85,19 @@ function Products(){
                : 
               (filterProducts.map((product) => {
                   return (<div className="col-md-6" key={product.id}>
-                    <div className="card border-0 mb-4 position-relative position-relative">
-                      <Link to={`/product/${product.id}`} className="text-dark">
-                        <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height" alt="..." />
-                      </Link>
-                      <div className="card-body p-0">
-                        <h4 className="mb-0 mt-1"><Link to={`/product/${product.id}`} className="text-decoration-none">{product.title}</Link></h4>
-                        <p className="card-text mb-0">NT${product.price} <span className="text-muted "><del>NT${product.origin_price}</del></span></p>
-                        <p className="text-muted mt-3"></p>
+                    <div className="card border-0 mb-4 me-4 position-relative position-relative">
+                      <Link to={`/product/${product.id}`} className="text-dark text-decoration-none">
+                        <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height img-hover" alt="..." />
+                      
+                      <div className="card-body p-0 d-flex justify-content-center">
+                          <p className="card-text fs-6 fw-bold mt-2">
+                            {product.title}&emsp;&emsp;
+                            <span className="fs-6 fw-normal">
+                            NT${product.price}
+                          </span>
+                        </p>
                       </div>
+                      </Link>
                     </div>
                   </div>
                 )}

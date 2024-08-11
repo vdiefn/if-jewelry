@@ -8,6 +8,9 @@ import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../sto
 function ArticleModal({ closeModal, getArticles, tempArticle, type }){
   const [date, setDate] = useState(new Date())
   const [message, dispatch] = useContext(MessageContext)
+  const [tagData, setTagData] = useState([])
+  const [tag, setTag] = useState([])
+
 
   const [tempData, setTempData] = useState({
       title: "",
@@ -20,6 +23,12 @@ function ArticleModal({ closeModal, getArticles, tempArticle, type }){
       content: "123"
     }
   )
+
+  const getArticle = async () => {
+    const id = tempArticle.id
+    const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/article/${id}`)
+    setTempData(res.data.article)
+  }
 
   useEffect(() => {
     if(type === 'create'){
@@ -35,18 +44,18 @@ function ArticleModal({ closeModal, getArticles, tempArticle, type }){
       })
       setDate(new Date())
     } else if(type === 'edit') {
-      setTempData(tempArticle)
+      getArticle()
       setDate(new Date(tempArticle.create_at))
-      
     }
-  }, [type, tempArticle ])
+  }, [type, tempArticle])
 
 
   const handleChange = (e) => {
     const { value, name } = e.target
     if (name === 'isPublic') {
       setTempData((pre) => ({ ...pre, [name]: e.target.checked }))
-    } else {
+    } 
+    else {
       setTempData((pre) => ({ ...pre, [name]: value }))
     }
   }
@@ -65,8 +74,7 @@ function ArticleModal({ closeModal, getArticles, tempArticle, type }){
         {
           data: {
             ...tempData,
-            create_at: date.getTime(),//轉換成unix timeStamp
-            content:'1'
+            create_at: date.getTime(),//轉換成unix timeStamp,
           }
         }
       )
@@ -80,23 +88,6 @@ function ArticleModal({ closeModal, getArticles, tempArticle, type }){
     getArticles()
   }
 
-  const uploadFile = async (file) => {
-    if (!file) {
-      return
-    }
-    const formData = new FormData()
-    formData.append('file-to-upload', file)
-    try {
-      const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/upload`, formData)
-      console.log(res)
-      setTempData({
-        ...tempData,
-        image: res.data.image
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  } 
 
 
   return (<>
@@ -140,16 +131,11 @@ function ArticleModal({ closeModal, getArticles, tempArticle, type }){
                   </label>
                 </div>
                 <div className='form-group mb-2'>
-                  <label className='w-100' htmlFor='customFile'>
-                    或 上傳圖片
-                    <input type="file" id='customFile' className='form-control mt-1' name="file-to-upload" onChange={(e) => uploadFile(e.target.files[0])} />
-                  </label>
                   <hr className='my-4' />
                   {tempData.image && (
                     <img src={tempData.image} className='img-fluid' alt='' />
                   )}
                 </div>
-                <img src="" alt='' className='img-fluid' />
               </div>
 
               <div className='col-sm-8'>
@@ -212,25 +198,24 @@ function ArticleModal({ closeModal, getArticles, tempArticle, type }){
                 </div>
 
                 <div className='col-sm-12'>
-
-                  <div className='form-group mb-2' style={{display: 'none'}}>
+                  <div className='form-group mb-2' >
                     <label className='w-100' htmlFor='content'>
                       次標題
-                      <input
+                      <textarea
                         type='text'
                         id='content'
                         name='content'
                         placeholder=''
                         className='form-control'
-                        // onChange={handleChange}
-                        // value={tempData.content || '4'}
-                        defaultValue='content'
+                        onChange={handleChange}
+                        rows='3'
+                        value={tempData.content || ''}
                       />
                     </label>
                   </div>
 
-                <div className='form-group mb-2'>
-                    <label className='w-100' htmlFor='description'>
+                  <div className='form-group mb-2'>
+                      <label className='w-100' htmlFor='description'>
                       文章內容
                       <textarea
                         type='text'
@@ -238,13 +223,12 @@ function ArticleModal({ closeModal, getArticles, tempArticle, type }){
                         name='description'
                         placeholder=''
                         className='form-control'
-                        cols='40'
                         rows='15'
                         onChange={handleChange}
                         value={tempData.description || ''}
                       />
-                  </label>
-                </div>
+                    </label>
+                  </div>
                 
                 <div className='form-group mb-2'>
                   <div className='form-check'>
@@ -284,7 +268,7 @@ function ArticleModal({ closeModal, getArticles, tempArticle, type }){
     </div>
   </>
   )
-
+  
 }
 
 export default ArticleModal

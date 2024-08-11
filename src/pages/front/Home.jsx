@@ -60,7 +60,7 @@ function Home() {
             <div className="carousel-item active">
               <div className="row justify-content-center py-7">
                 <div className="col-md-6 text-center mt-3">
-                  <h3>關於簡約</h3>
+                  <h4>關於簡約</h4>
                   <h4 className="my-5">「真正的優雅奠基於簡約之上。」</h4>
                   <p><small>—Ms. Chanel—</small></p>
                 </div>
@@ -75,16 +75,7 @@ function Home() {
                 </div>
               </div>
             </div>
-
           </div>
-          <Link className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="sr-only">Previous</span>
-          </Link>
-          <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="sr-only">Next</span>
-          </a>
         </div>
       </div>
     </div>
@@ -95,13 +86,18 @@ function Home() {
             return (<div className="row justify-content-between mt-4" key={product.id}>
               <div className="col-md-6">
                 <Link to={`/product/${product.id}`}>
-                  <img src={product.imageUrl} alt="" className="img-fluid" />
+                  <img src={product.imageUrl} alt="" className="img-fluid img-hover" />
                 </Link>
               </div>
-              <div className="col-md-4 m-auto text-center">
+              <div className="col-md-6 m-auto text-center">
                 <Link to={`/product/${product.id}`} className='text-decoration-none'>
-                  <h4 className="mt-4">{product.title}</h4>
-                  <p className="text-muted">{product.content}</p>
+                  <h4 className="mt-4 text-align-right mb-4">{product.title}</h4>
+                  <p className="text-muted pre-wrap text-align-right">
+                    {
+                      product.content.length>10? product.content.substr(0,32)+'......' : product.content
+                    }
+
+                  </p>
                 </Link>
               </div>
             </div>)
@@ -113,13 +109,17 @@ function Home() {
             return (<div className="row flex-row-reverse justify-content-between mt-4" key={product.id}>
               <div className="col-md-6">
                 <Link to={`/product/${product.id}`} >
-                  <img src={product.imageUrl} alt="" className="img-fluid" />
+                  <img src={product.imageUrl} alt="" className="img-fluid img-hover" />
                 </Link>
               </div>
-              <div className="col-md-4 m-auto text-center">
+              <div className="col-md-6 m-auto text-center">
                 <Link to={`/product/${product.id}`} className='text-decoration-none'>
-                  <h4 className="mt-4">{product.title}</h4>
-                  <p className="text-muted ">{product.content}</p>
+                  <h4 className="mt-4 text-align-left mb-4">{product.title}</h4>
+                  <p className="text-muted pre-wrap text-align-left">
+                    {
+                      product.content.length > 10 ? product.content.substr(0, 39) +'······' : product.content
+                    } 
+                  </p>
                 </Link>
               </div>
             </div>)

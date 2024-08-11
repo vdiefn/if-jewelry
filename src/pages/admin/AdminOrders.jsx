@@ -29,6 +29,7 @@ function AdminOrders(){
   const getOrders = async (page=1) => {
     const orderRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/orders?page=${page}`)
     setOrders(orderRes.data.orders)
+    
     setPagination(orderRes.data.pagination)
   }
  
@@ -53,7 +54,6 @@ function AdminOrders(){
   const deleteOrder = async (id) => {
     try {
       const res = await axios.delete(`/v2/api/${import.meta.env.VITE_API_PATH}/admin/order/${id}`)
-      console.log(res)
       if (res.data.success) {
         getOrders()
         deleteModal.current.hide()

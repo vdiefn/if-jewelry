@@ -11,6 +11,10 @@
   height: 20rem;
 }
 
+.product-img-height {
+  height: 25rem;
+}
+
 .react-loading {
   position: fixed;
   top: 0;
@@ -63,5 +67,13 @@ input[type=number] {
 }
 
 .img-hover:hover {
-  transform: scale(1.02) translate(0, -8px);
+  transform: scale(1.05) translate(0, -8px);
+}
+
+.text-align-left {
+  text-align:left;
+}
+
+.text-align-right {
+  text-align: right;
 }

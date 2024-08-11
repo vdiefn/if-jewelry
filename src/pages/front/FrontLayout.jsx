@@ -1,6 +1,8 @@
 import { Outlet, useLocation, useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useReducer } from "react"
 import axios from "axios"
+import { MessageContext, messageReducer, initState } from '../../store/messageStore'
+import Message from '../../components/Message';
 import Navbar from "../../components/Navbar"
 import Loading from '../../components/Loading'
 
@@ -10,6 +12,7 @@ function FrontLayout() {
   const [ cartData, setCartData ] = useState({})
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const reducer = useReducer(messageReducer, initState)
 
   const getCart = async() => {
     try {
@@ -35,7 +38,6 @@ function FrontLayout() {
     setIsLoading(true)
     const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/products?page=${page}`)
     setProducts(productRes.data.products)
-    // setPagination(productRes.data.pagination)
     setIsLoading(false)
   }
   
@@ -49,7 +51,9 @@ function FrontLayout() {
 
 
 
-  return (<>
+  return (
+    <MessageContext.Provider value={reducer}>
+      <Message />
     <div className="position-relative" style={{ display: (location.pathname === `/success/${orderId}` ? 'none' : 'flex') }}>
       <div className="position-absolute" style={{ top: '0', bottom: '0', left: '0', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', backgroundPosition: 'center center', opacity: '0.1' }}></div>
       <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '80vh' : '10vh') }} >
@@ -91,7 +95,7 @@ function FrontLayout() {
         </div>
       </div>
     </div>
-  </>)
+    </MessageContext.Provider>)
 }
 
 export default FrontLayout
