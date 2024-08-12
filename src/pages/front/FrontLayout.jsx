@@ -64,7 +64,6 @@ function FrontLayout() {
             <p className="text-muted mb-0">如果，代表一切可能。</p>
             <p className="text-muted mb-0">如果，代表所有機會。</p>
             <p className="text-muted mb-0">如果，代表所有改變。</p>
-            <p className="text-muted mb-0">如果，讓我……</p>
           </div>
           
         </div>
