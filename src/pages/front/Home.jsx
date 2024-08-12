@@ -23,7 +23,9 @@ function Home() {
     
   return (<div className="container">
     <Loading isLoading={isLoading} />
-    <div className="row mb-2  ">
+    
+    <div className="row ">
+      <Link to='/products' className='text-decoration-none mt-4'><span className='text-muted'>More+</span></Link> 
       {
         products?.slice(0, 3).map((product) => {
           return (<div className="col-md-4 mt-md-4" key={product.id}>
@@ -32,7 +34,7 @@ function Home() {
 
                 <img
                   src={product.imageUrl}
-                  className="card-img-top rounded-0 object-fit img-height img-hover"
+                  className="card-img-top rounded-0 object-fit home-img-height img-hover"
                   alt="..."
                 />
                 <div className="card-body text-center">

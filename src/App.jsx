@@ -9,6 +9,7 @@ import AdminOrders from './pages/admin/AdminOrders'
 import AdminArticles from './pages/admin/AdminArticles'
 import FrontLayout from './pages/front/FrontLayout'
 import Home from './pages/front/Home'
+import About from './pages/front/About'
 import Products from './pages/front/Products'
 import ProductDetail from './pages/front/ProductDetail'
 import Cart from './pages/front/Cart'
@@ -35,6 +36,7 @@ function App() {
           <Route path='pay/:orderId' element={<Pay />}></Route>
           <Route path='articles' element={<Articles />}></Route>
           <Route path='article/:id' element={<ArticleDetail />}></Route>
+          <Route path='about' element={<About />}></Route>
         </Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path='/admin' element={<Dashboard />}>

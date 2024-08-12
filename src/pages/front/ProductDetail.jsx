@@ -105,6 +105,7 @@ function ProductDetail() {
               >
                 加入購物車
               </button>
+              <Link to='/cart' className='text-decoration-none'><p className='text-muted text-end mt-3'>前往結帳</p></Link>
             </div>
           </div>
         </div>

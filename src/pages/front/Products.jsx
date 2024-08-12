@@ -64,7 +64,7 @@ function Products(){
             { request.length === 0 ? 
               (products.map((product) => {
                 return (<div className="col-md-6" key={product.id}>
-                  <div className="card border-0 mb-4 position-relative position-relative">
+                  <div className="card border-0 mb-4 position-relative position-relative ms-4">
                     <Link to={`/product/${product.id}`} className="text-dark text-decoration-none">
                       <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height img-hover" alt="..." />
 
