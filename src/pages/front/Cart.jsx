@@ -4,11 +4,16 @@ import { useState, useEffect, useContext } from 'react'
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore"
 
 function Cart() {
-  const { cartData, getCart } = useOutletContext()
-  const [couponData, setCouponData] = useState('')
-  const [getCost, setGetCost] =  useState({})
+  const { cartData, getCart, getCost, getCoupon , couponData, setCouponData} = useOutletContext()
+  // const [couponData, setCouponData] = useState('')
+  // const [getCost, setGetCost] =  useState({})
   const [loadingItems, setLoadingItem ] = useState([])
   const [message, dispatch] = useContext(MessageContext)
+
+  const [orderData, setOrderData] = useState({})
+  
+
+ 
 
   const removeCartItem = async(id) => {
     try {
@@ -37,21 +42,25 @@ function Cart() {
     }
   }
 
-  const getCoupon = async() => {
-    const data = {
-      data: {
-        code: couponData
-    }}
-    try{
-      const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/coupon`, data)
-      setGetCost(res.data)
-      console.log(res)
-      handleSuccessMessage(dispatch, res)
-    } catch(error){
-      console.log(error)
-      handleErrorMessage(dispatch, error)
-    }
-  }
+  // const getCoupon = async() => {
+  //   const data = {
+  //     data: {
+  //       code: couponData
+  //   }}
+  //   try{
+  //     const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/coupon`, data)
+  //     setGetCost(res.data)
+  //     // setGetCard((pre) => ({ ...pre, final_total: getCost.data.final_total }))
+  //     // setTempData((pre) => ({ ...pre, [name]: e.target.checked }))
+  //     // cartData.final_total
+  
+  //     console.log(res)
+  //     handleSuccessMessage(dispatch, res)
+  //   } catch(error){
+  //     console.log(error)
+  //     handleErrorMessage(dispatch, error)
+  //   }
+  // }
 
   const handleChange = (e) => {
     setCouponData(e.target.value)
@@ -61,7 +70,7 @@ function Cart() {
 
 
   return (<>
-    <div className="container">
+    <div className="container full-height">
       <div className="mt-3 me-5 ms-5">
         <h3 className="mt-3 mb-4">購物車</h3>
         
@@ -187,7 +196,9 @@ function Cart() {
                       <p className="mb-0 h5 fw-bold">
                         {couponData.length > 0 ? '折扣後金額' : '總金額'}
                       </p>
-                      <p className="mb-0 h5 fw-bold">NT${couponData.length === 0 ? cartData?.final_total : getCost?.data?.final_total}</p>
+                      {/* <p className="mb-0 h5 fw-bold">NT${couponData.length === 0 ? cartData?.final_total : getCost?.data?.final_total}</p> */}
+                      <p className="mb-0 h5 fw-bold">NT${cartData?.final_total}</p>
+                      <p className="mb-0 h5 fw-bold">NT${getCost?.data?.final_total}</p>
                     </div>
                     <Link to='/checkout' className="btn btn-dark w-100 mt-4">進行結帳</Link>
                   </div>

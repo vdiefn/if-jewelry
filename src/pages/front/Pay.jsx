@@ -5,7 +5,7 @@ import { Input, Select, CheckboxRadio } from '../../components/FormElements'
 import axios from 'axios'
 
 function Pay() {
-  const { cartData } = useOutletContext()
+  const { cartData, getCost } = useOutletContext()
   const navigate = useNavigate()
   const { orderId } = useParams()
   const {
@@ -36,9 +36,10 @@ function Pay() {
                 <div className="w-100">
                   <div className="d-flex justify-content-between">
                     <p className="mb-0 fw-bold">{item.product.title}</p>
-                    <p className="mb-0">NT${item.total}</p>
+                    {/* <p className="mb-0">NT${item.total}</p> */}
+                    <p className="mb-0 fw-bold">x{item.qty}</p>
                   </div>
-                  <p className="mb-0 fw-bold">x{item.qty}</p>
+                  
                 </div>
               </div>
 
@@ -60,7 +61,7 @@ function Pay() {
           </table>
           <div className="d-flex justify-content-between mt-4">
             <p className="mb-0 h4 fw-bold">總金額</p>
-            <p className="mb-0 h4 fw-bold">NT${cartData?.final_total}</p>
+            <p className="mb-0 h4 fw-bold">NT${getCost?.data?.final_total}</p>
           </div>
         </div>
       </div>

@@ -2,12 +2,16 @@ import { Link, useOutletContext, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { Input, TextArea } from '../../components/FormElements'
-
+import {useEffect} from 'react'
 
 function Checkout(){
-  const { cartData } = useOutletContext()
+  const { cartData, getCoupon, getCost } = useOutletContext()
   console.log(cartData)
+  console.log(getCost)
   
+  // cartData.final_total
+
+
   const navigate = useNavigate()
   const {
     register,
@@ -32,7 +36,7 @@ function Checkout(){
       }
     }
     const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/order`, form)
-    console.log(res)
+    console.log('這',res)
     navigate(`/pay/${res.data.orderId}`)
   }
 
@@ -66,7 +70,7 @@ function Checkout(){
               <tbody>
                 <tr>
                   <th scope="row" className="border-0 px-0 pt-4 font-weight-normal">小計</th>
-                  <td className="text-end border-0 px-0 pt-4">NT${cartData?.final_total}</td>
+                  <td className="text-end border-0 px-0 pt-4">NT${cartData?.total}</td>
                 </tr>
                 <tr>
                   <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">付款方式</th>
@@ -76,7 +80,7 @@ function Checkout(){
             </table>
             <div className="d-flex justify-content-between mt-4">
               <p className="mb-0 h4 fw-bold">總金額</p>
-              <p className="mb-0 h4 fw-bold">NT${cartData?.final_total}</p>
+              <p className="mb-0 h4 fw-bold">NT${getCost.data.final_total}</p>
             </div>
           </div>
         </div>

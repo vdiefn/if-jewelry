@@ -24,9 +24,9 @@ function Success() {
   }
 
   return( <>
-    <div className="position-relative d-flex">
-      <div className="container d-flex flex-column" style={{minHeight: '100vh'}}>
-        <div className="row my-auto pb-7">
+    <div className="position-relative d-flex full-height-success">
+      <div className="container d-flex flex-column">
+        <div className="row my-auto">
           <div className="col-md-5 d-flex flex-column">
             <div className="my-auto">
               <div className='mb-3'><h2> 購買成功</h2></div>
@@ -56,9 +56,9 @@ function Success() {
                                   <h5>{item.product.title}</h5>
                                   <p className='mb-0'>x{item.qty}</p>
                                 </div>
-                                <div className='d-flex justify-content-end mt-auto'>
+                                {/* <div className='d-flex justify-content-end mt-auto'>
                                   <p className='mb-0'>NT${item.total}</p>
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           </li>

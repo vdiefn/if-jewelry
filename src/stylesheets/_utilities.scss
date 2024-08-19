@@ -81,3 +81,12 @@ input[type=number] {
 .text-align-right {
   text-align: right;
 }
+
+.full-height {
+  min-height: calc(100vh - 362px) ;
+} 
+
+.full-height-success {
+  min-height: calc(100vh - 300px);
+}
+

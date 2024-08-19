@@ -13,6 +13,8 @@ function FrontLayout() {
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const reducer = useReducer(messageReducer, initState)
+  const [getCost, setGetCost] = useState({})
+  const [couponData, setCouponData] = useState('')
 
   const getCart = async() => {
     try {
@@ -39,6 +41,27 @@ function FrontLayout() {
     const productRes = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/products?page=${page}`)
     setProducts(productRes.data.products)
     setIsLoading(false)
+  }
+
+  const getCoupon = async () => {
+    const data = {
+      data: {
+        code: couponData
+      }
+    }
+    try {
+      const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/coupon`, data)
+      setGetCost(res.data)
+      // setGetCard((pre) => ({ ...pre, final_total: getCost.data.final_total }))
+      // setTempData((pre) => ({ ...pre, [name]: e.target.checked }))
+      // cartData.final_total
+
+      console.log(res)
+      // handleSuccessMessage(dispatch, res)
+    } catch (error) {
+      console.log(error)
+      // handleErrorMessage(dispatch, error)
+    }
   }
   
   useEffect(() => {
@@ -72,7 +95,7 @@ function FrontLayout() {
     
   
     
-    <Outlet context={{ getCart, cartData, getProducts, products  }}></Outlet>
+    <Outlet context={{ getCart, cartData, getProducts, products, getCoupon, couponData, setCouponData, getCost }}></Outlet>
     <div className="bg-light py-4 mt-5">
     </div>
     <div className="bg-dark py-5">
