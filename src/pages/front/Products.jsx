@@ -59,12 +59,12 @@ function Products(){
           </div>
         </div>
     
-        <div className="col-md-9 ms-4">
+        <div className="col-md-9">
           <div className="row">
             { request.length === 0 ? 
               (products.map((product) => {
                 return (<div className="col-md-6" key={product.id}>
-                  <div className="card border-0 mb-4 position-relative position-relative ms-4">
+                  <div className="card border-0 mb-4 position-relative position-relative">
                     <Link to={`/product/${product.id}`} className="text-dark text-decoration-none">
                       <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height img-hover" alt="..." />
 
@@ -85,7 +85,7 @@ function Products(){
                : 
               (filterProducts.map((product) => {
                   return (<div className="col-md-6" key={product.id}>
-                    <div className="card border-0 mb-4 me-4 position-relative position-relative">
+                    <div className="card border-0 mb-4 position-relative position-relative">
                       <Link to={`/product/${product.id}`} className="text-dark text-decoration-none">
                         <img src={product.imageUrl} className="card-img-top rounded-0 object-fit img-height img-hover" alt="..." />
                       

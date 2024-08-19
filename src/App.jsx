@@ -32,7 +32,7 @@ function App() {
           <Route path='product/:id' element={<ProductDetail />}></Route>
           <Route path='cart' element={<Cart />}></Route>
           <Route path='checkout' element={<Checkout />}></Route>
-          <Route path='success/:orderId' element={<Success />}></Route>
+          <Route path='success/:orderId' element={<Success />} forceRefresh={true}></Route>
           <Route path='pay/:orderId' element={<Pay />}></Route>
           <Route path='articles' element={<Articles />}></Route>
           <Route path='article/:id' element={<ArticleDetail />}></Route>

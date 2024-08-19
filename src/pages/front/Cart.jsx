@@ -31,7 +31,7 @@ function Cart() {
       const res = await axios.put(`/v2/api/${import.meta.env.VITE_API_PATH}/cart/${item.id}`, data)
       setLoadingItem(loadingItems.filter((loadingObject) => loadingObject !== item.id ))
       getCart()
-
+      console.log(res)
     } catch (error) {
       console.log(error)
     }
@@ -45,6 +45,7 @@ function Cart() {
     try{
       const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/coupon`, data)
       setGetCost(res.data)
+      console.log(res)
       handleSuccessMessage(dispatch, res)
     } catch(error){
       console.log(error)
@@ -66,7 +67,7 @@ function Cart() {
         
 
         {
-            cartData?.carts?.length === 0 ? 
+          (cartData?.carts?.length === 0) || (cartData?.carts?.length === undefined)  ? 
       
             (
                 <>

@@ -163,15 +163,8 @@ function Pay() {
                       }}
                     ></Input>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="card rounded-0">
-            <div className="card-header bg-white border-0 py-3 collapsed" id="headingThree" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                <p className="mb-0 position-relative custom-checkout-labe fw-bold">發票資訊</p>
-            </div>
-            <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-              <div className="form-check card-body bg-light ps-5 py-4">
+                  <label className="bg-light border-0 position-relative custom-checkout-labe mt-4">發票資訊
+                    <div className="form-check card-body bg-light">
                     <CheckboxRadio
                       type='radio'
                       name='isVegetarian'
@@ -180,18 +173,18 @@ function Pay() {
                       register={register}
                       errors={errors}
                       rules={{ required: '請選擇發票提供方式' }}
-                    labelText="紙本發票"
+                      labelText="紙本發票"
                     ></CheckboxRadio>
-                  <CheckboxRadio
-                    type='radio'
-                    name='isVegetarian'
-                    id='vegetarian'
-                    value={true}
-                    register={register}
-                    errors={errors}
-                    rules={{ required: '請選擇發票提供方式' }}
-                    labelText="公司發票"
-                  ></CheckboxRadio>
+                    <CheckboxRadio
+                      type='radio'
+                      name='isVegetarian'
+                      id='vegetarian'
+                      value={true}
+                      register={register}
+                      errors={errors}
+                      rules={{ required: '請選擇發票提供方式' }}
+                      labelText="公司發票"
+                    ></CheckboxRadio>
                     <CheckboxRadio
                       type='radio'
                       name='isVegetarian'
@@ -199,11 +192,12 @@ function Pay() {
                       value={false}
                       register={register}
                       errors={errors}
-                    rules={{ required: '請選擇發票提供方式' }}
-                    labelText="捐贈發票"
+                      rules={{ required: '請選擇發票提供方式' }}
+                      labelText="捐贈發票"
                     ></CheckboxRadio>
-                  
-                </div>
+                  </div>
+                  </label>
+              </div>
             </div>
           </div>
         </div>

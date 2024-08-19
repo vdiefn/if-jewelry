@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom"
 
 function Navbar({ cartData }){
+  console.log(cartData?.carts?.length)
   return(<>
     <nav className="navbar navbar-expand-lg navbar-light">
       <NavLink className="navbar-brand" to='/'>如果：珠寶 If Jewelry</NavLink>
@@ -16,11 +17,20 @@ function Navbar({ cartData }){
           <NavLink className="nav-item nav-link me-4 position-relative" to="/cart">
             <i className="bi bi-cart-check"></i>
             
-              {cartData?.carts?.length !== 0 && (
+            {/* {cartData?.carts?.length !== 0 && (
               <span className="position-absolute top-2 start-100 translate-middle badge rounded-pill bg-danger">
                 {cartData?.carts?.length}
               </span>
-              )}
+              )} */}
+            {cartData?.carts?.length !== 0? (
+              <span className="position-absolute top-2 start-100 translate-middle badge rounded-pill bg-danger">
+                {cartData?.carts?.length}
+              </span>
+            ): (
+              <span className="position-absolute top-2 start-100 translate-middle badge rounded-pill bg-danger">
+               
+              </span>
+            )}
             
           </NavLink>
         </div>

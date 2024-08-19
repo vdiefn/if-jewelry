@@ -27,10 +27,10 @@ function Articles(){
   <Loading isLoading={isLoading} />
   
     <div className="container">
-      <div className="row flex-md-row-reverse flex-column">
+      <div className="row flex-fill flex-md-row-reverse flex-column">
         {
           articles?.slice(0, 1).map((article) => {
-            return (<div className="col-md-7 mt-md-2" key={article.id}>
+            return (<div className="col-md-12 mt-md-2" key={article.id}>
               <Link to={`/article/${article.id}`} className='text-decoration-none'>
                 <div className="card border-0 mb-4 position-relative position-relative">
                   <img
@@ -53,12 +53,14 @@ function Articles(){
             )
           })
         }
-        <div className="col-md-5 d-flex flex-column justify-content-center mt-md-0 mt-3" >
+        {/* <div className="col-md-5 d-flex flex-column justify-content-center mt-md-0 mt-3 bg-light p-2" >
           <h2 className="fw-bold">時尚會變，<br></br>唯獨風格歷久不衰。</h2>
           <h5 className="font-weight-normal text-muted mt-5 text-end">
             —Ms. Chanel—
           </h5>
-        </div>
+        </div> */}
+
+   
       </div>
       <div className="row mt-3">
 

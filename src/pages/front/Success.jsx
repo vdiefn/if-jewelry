@@ -1,10 +1,11 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 function Success() {
   const { orderId } = useParams()
   const [ orderData, setOrderData ] = useState({})
+  const navigate = useNavigate()
 
   const getCart = async(orderId) => {
     const res = await axios.get(
@@ -16,6 +17,11 @@ function Success() {
   useEffect(() => {
     getCart(orderId)
   }, [orderId])
+
+  const handleClick = () => {
+    navigate('/')
+    location.reload()
+  }
 
   return( <>
     <div className="position-relative d-flex">
@@ -72,13 +78,14 @@ function Success() {
               </div>
 
 
-              <Link to='/' className="btn btn-dark mt-4 px-5">回到首頁</Link>
+              <button type='button' className="btn btn-dark mt-4 px-5" onClick={handleClick} >回到首頁</button>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-md-50 w-50 position-absolute opacity-1" style={{zIndex: '-1', minHeight: '100vh', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)',
-      backgroundPosition: 'center center'}}>
+      <div className="w-md-50 w-50 position-absolute opacity-1" style={{
+        zIndex: '-1', minHeight: '100vh', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1696290685415-518ce48e6da0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)', backgroundPosition: 'top center',
+        }}>
       </div>
     </div>
   </>

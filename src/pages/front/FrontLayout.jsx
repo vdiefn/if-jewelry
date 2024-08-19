@@ -55,7 +55,7 @@ function FrontLayout() {
     <MessageContext.Provider value={reducer}>
       <Message />
     <div className="position-relative" style={{ display: (location.pathname === `/success/${orderId}` ? 'none' : 'flex') }}>
-      <div className="position-absolute" style={{ top: '0', bottom: '0', left: '0', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)', backgroundPosition: 'center center', opacity: '0.1' }}></div>
+        <div className="position-absolute" style={{ top: '0', bottom: '0', left: '0', right: '0', backgroundImage: 'url(https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)', backgroundPosition: 'center center', opacity: '0.1' }}></div>
       <div className="container d-flex flex-column" style={{ minHeight: (location.pathname === '/' ? '80vh' : '5vh') }} >
         <Navbar cartData={cartData} />
         <div className="row justify-content-center my-auto" style={{ display: (location.pathname === '/' ? 'flex' : 'none') }}>
