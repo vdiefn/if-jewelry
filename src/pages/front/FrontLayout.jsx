@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useParams } from "react-router-dom"
-import { useEffect, useState, useReducer } from "react"
+import { useEffect, useState, useReducer} from "react"
 import axios from "axios"
-import { MessageContext, messageReducer, initState } from '../../store/messageStore'
+import { MessageContext, messageReducer, initState} from '../../store/messageStore'
 import Message from '../../components/Message';
 import Navbar from "../../components/Navbar"
 import Loading from '../../components/Loading'
@@ -56,7 +56,6 @@ function FrontLayout() {
       // setTempData((pre) => ({ ...pre, [name]: e.target.checked }))
       // cartData.final_total
 
-      console.log(res)
       // handleSuccessMessage(dispatch, res)
     } catch (error) {
       console.log(error)

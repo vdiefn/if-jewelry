@@ -188,17 +188,18 @@ function Cart() {
                         </tr>
                         <tr>
                           <th scope="row" className="border-0 px-0 pt-0 pb-4 font-weight-normal">使用優惠券</th>
-                          <td className="text-end border-0 px-0 pt-0 pb-4">{couponData.length > 0 ? '是' : '否'}</td>
+                          <td className="text-end border-0 px-0 pt-0 pb-4">{getCost.success ? '是' : '否'}</td>
                         </tr>
                       </tbody>
                     </table>
                     <div className="d-flex justify-content-between mt-4">
-                      <p className="mb-0 h5 fw-bold">
-                        {couponData.length > 0 ? '折扣後金額' : '總金額'}
+                      <p> { getCost.success? '折扣後金額' : '總金額'}
                       </p>
                       {/* <p className="mb-0 h5 fw-bold">NT${couponData.length === 0 ? cartData?.final_total : getCost?.data?.final_total}</p> */}
-                      <p className="mb-0 h5 fw-bold">NT${cartData?.final_total}</p>
-                      <p className="mb-0 h5 fw-bold">NT${getCost?.data?.final_total}</p>
+                      <p className="mb-0 h5 fw-bold">
+                        {getCost.success ? `NT$${getCost?.data?.final_total}` : `NT$${cartData?.final_total}`}
+                      </p>
+
                     </div>
                     <Link to='/checkout' className="btn btn-dark w-100 mt-4">進行結帳</Link>
                   </div>

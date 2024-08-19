@@ -1,4 +1,4 @@
-import { Link, useOutletContext, useNavigate } from 'react-router-dom'
+import { Link, useOutletContext, useNavigate, useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { Input, TextArea } from '../../components/FormElements'
@@ -6,11 +6,9 @@ import {useEffect} from 'react'
 
 function Checkout(){
   const { cartData, getCoupon, getCost } = useOutletContext()
-  console.log(cartData)
-  console.log(getCost)
-  
-  // cartData.final_total
 
+  const { orderId } = useParams()
+  
 
   const navigate = useNavigate()
   const {
@@ -21,6 +19,13 @@ function Checkout(){
     mode: 'onTouch'
   })
 
+  const getData = async() => {
+    const res = await axios.get(`/v2/api/${import.meta.env.VITE_API_PATH}/order/${orderId}`)
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   const onSubmit = async(data) => {
     const { name, email, tel, address} = data
@@ -36,7 +41,6 @@ function Checkout(){
       }
     }
     const res = await axios.post(`/v2/api/${import.meta.env.VITE_API_PATH}/order`, form)
-    console.log('這',res)
     navigate(`/pay/${res.data.orderId}`)
   }
 
@@ -48,7 +52,7 @@ function Checkout(){
         </div>
       </div>
       <div className="row flex-row-reverse justify-content-center pb-5">
-        <div className="col-md-4">
+        <div className="col-md-5">
           <div className="border p-4 mb-4">
             {
               cartData?.carts?.map((item) => {
@@ -57,9 +61,10 @@ function Checkout(){
                   <div className="w-100">
                     <div className="d-flex justify-content-between">
                       <p className="mb-0 fw-bold">{item.product.title}</p>
-                      <p className="mb-0">NT${item.final_total}</p>
+                      <p className="mb-0 fw-bold">x&nbsp;{item.qty}</p>
+                      
                     </div>
-                    <p className="mb-0 fw-bold">x&nbsp;{item.qty}</p>
+                    <p className="mb-0 ms-2">NT${item?.final_total}</p>
                   </div>
                 </div>
                 )
@@ -80,7 +85,11 @@ function Checkout(){
             </table>
             <div className="d-flex justify-content-between mt-4">
               <p className="mb-0 h4 fw-bold">總金額</p>
-              <p className="mb-0 h4 fw-bold">NT${getCost.data.final_total}</p>
+              <p className="mb-0 h4 fw-bold">
+                {
+                  getCost?.data?.final_total ? `NT$${getCost?.data?.final_total}` : `NT$${cartData?.total}`
+                }
+              </p>
             </div>
           </div>
         </div>

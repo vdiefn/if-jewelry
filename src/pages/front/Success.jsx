@@ -24,11 +24,11 @@ function Success() {
   }
 
   return( <>
-    <div className="position-relative d-flex full-height-success">
-      <div className="container d-flex flex-column">
+    <div className="position-relative d-flex ">
+      <div className="container d-flex flex-column full-height-success ">
         <div className="row my-auto">
           <div className="col-md-5 d-flex flex-column">
-            <div className="my-auto">
+            <div className="my-auto mt-5">
               <div className='mb-3'><h2> 購買成功</h2></div>
 
               <p>感謝您對&nbsp;「如果·If Jwewlry」&nbsp;的支持！希望您會喜歡收到的商品😊</p>

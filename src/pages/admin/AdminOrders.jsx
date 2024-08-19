@@ -95,7 +95,8 @@ function AdminOrders(){
             return(
               <tr key={order.id}>
                 <td>{order.id}</td>
-                <td>{new Date(order.create_at*1000).toDateString()}</td>
+                {/* <td>{new Date(order.create_at*1000).toDateString()}</td> */}
+                <td>{new Date(order.create_at * 1000).toISOString().split('T')[0]}</td>
                 <td>{order.user.name}</td>
                 <td>{order.total}</td>
                 <td>{order.is_paid? '已付款': '未付款'}</td>

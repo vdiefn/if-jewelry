@@ -70,8 +70,8 @@ function ProductDetail() {
               <li className="breadcrumb-item active" aria-current="page"></li>
             </ol>
           </nav>
-          <h2 className="fw-bold h1 mb-1">{product.title}</h2>
-          <p className="h4 fw-bold text-end">NT${product.price}</p>
+          <h3 className="fw-bold mb-4">{product.title}</h3>
+          <p className="h5 text-end">NT${product.price}</p>
           <div className="row align-items-center">
             <div className="col-6">
               <div className="input-group my-3 bg-light rounded">

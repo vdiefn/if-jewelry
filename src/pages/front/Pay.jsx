@@ -61,7 +61,11 @@ function Pay() {
           </table>
           <div className="d-flex justify-content-between mt-4">
             <p className="mb-0 h4 fw-bold">總金額</p>
-            <p className="mb-0 h4 fw-bold">NT${getCost?.data?.final_total}</p>
+            <p className="mb-0 h4 fw-bold">
+              {
+                getCost?.data?.final_total ? `NT$${getCost?.data?.final_total}` : `NT$${cartData?.total}`
+              }
+            </p>
           </div>
         </div>
       </div>

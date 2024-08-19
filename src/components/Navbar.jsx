@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom"
 
 function Navbar({ cartData }){
-  console.log(cartData?.carts?.length)
   return(<>
     <nav className="navbar navbar-expand-lg navbar-light">
       <NavLink className="navbar-brand" to='/'>如果：珠寶 If Jewelry</NavLink>
